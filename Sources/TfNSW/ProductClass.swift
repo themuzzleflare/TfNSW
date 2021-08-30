@@ -2,20 +2,49 @@ import Foundation
 import UIKit
 
 public enum ProductClass: Int, Decodable {
+  /// Train.
   case train = 1
+
+  /// Metro.
   case metro = 2
+
+  /// Light Rail.
   case lightRail = 4
+
+  /// Bus.
   case bus = 5
+
+  /// Coach.
   case coach = 7
+
+  /// Ferry.
   case ferry = 9
+
+  /// School Bus.
   case schoolBus = 11
+
+  /// Walking.
   case walking = 99
+
+  /// Walking (Footpath).
   case walkingFootpath = 100
+
+  /// Bicycle.
   case bicycle = 101
+
+  /// Take Bicycle On Public Transport.
   case takeBicycleOnPublicTransport = 102
+
+  /// Kiss & Ride.
   case kissAndRide = 103
+
+  /// Park & Ride.
   case parkAndRide = 104
+
+  /// Taxi.
   case taxi = 105
+
+  /// Car.
   case car = 106
 }
 

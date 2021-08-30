@@ -15,19 +15,9 @@ let package = Package(
       ]
     )
   ],
-  dependencies: [
-    .package(
-      name: "SwiftDate",
-      url: "https://github.com/malcommac/SwiftDate.git",
-      from: "6.3.1"
-    )
-  ],
   targets: [
     .target(
-      name: "TfNSW",
-      dependencies: [
-        "SwiftDate"
-      ]
+      name: "TfNSW"
     )
   ]
 )
