@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 public struct TripRequestResponseJourney: Decodable {
   public var rating: Int?
@@ -47,10 +48,14 @@ extension TripRequestResponseJourney {
   }
 
   public var transportationNames: String? {
-    return legs?.compactMap { $0.transportation?.disassembledName }.joined(separator: ",")
+    return legs?.compactMap { $0.transportationName }.joined(separator: ",")
   }
 
   public var initialProductClass: ProductClass? {
     return legs?.first?.transportation?.product?.class
+  }
+
+  public var colour: UIColor? {
+    return departueTimeInPast ?? false ? initialProductClass?.colour.withAlphaComponent(0.500) : initialProductClass?.colour
   }
 }

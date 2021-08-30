@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 public struct TripRequestResponseJourneyLeg: Decodable {
   /// The approximate amount of time in seconds required to complete this journey leg.
@@ -38,5 +39,41 @@ extension TripRequestResponseJourneyLeg {
 
   public var isWheelchairAccessible: Bool? {
     return properties?.PlanLowFloorVehicle == .oneValue && properties?.PlanWheelChairAccess == .oneValue ? true : false
+  }
+
+  public var fromName: String? {
+    return origin?.shortNamePlatform
+  }
+
+  public var toName: String? {
+    return destination?.shortNamePlatform
+  }
+
+  public var fromTime: String? {
+    return origin?.departureTimeText
+  }
+
+  public var toTime: String? {
+    return destination?.arrivalTimeText
+  }
+
+  public var relativeDepartureTime: String? {
+    return origin?.relativeDepartureTime
+  }
+
+  public var departueTimeInPast: Bool? {
+    return origin?.departureTimeInPast
+  }
+
+  public var transportationName: String? {
+    return transportation?.disassembledName
+  }
+
+  public var productClass: ProductClass? {
+    return transportation?.product?.class
+  }
+
+  public var colour: UIColor? {
+    return departueTimeInPast ?? false ? productClass?.colour.withAlphaComponent(0.500) : productClass?.colour
   }
 }
