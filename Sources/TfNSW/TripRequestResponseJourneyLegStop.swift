@@ -51,23 +51,31 @@ extension TripRequestResponseJourneyLegStop {
     return disassembledName?.replacingOccurrences(of: " Station", with: "").split(separator: ",").dropLast().joined()
   }
 
+  public var departureTime: String? {
+    return departureTimeEstimated ?? departureTimePlanned
+  }
+
+  public var arrivalTime: String? {
+    return arrivalTimeEstimated ?? arrivalTimePlanned
+  }
+
   public var departureTimeText: String? {
-    return departureTimeEstimated?.toDate()?.toString(.time(.short)) ?? departureTimePlanned?.toDate()?.toString(.time(.short))
+    return departureTime?.toDate()?.toString(.time(.short))
   }
 
   public var arrivalTimeText: String? {
-    return arrivalTimeEstimated?.toDate()?.toString(.time(.short)) ?? arrivalTimePlanned?.toDate()?.toString(.time(.short))
+    return arrivalTime?.toDate()?.toString(.time(.short))
   }
 
   public var relativeDepartureTime: String? {
-    return departureTimeEstimated?.toDate()?.toRelative() ?? departureTimePlanned?.toDate()?.toRelative()
+    return departureTime?.toDate()?.toRelative()
   }
 
   public var relativeArrivalTime: String? {
-    return arrivalTimeEstimated?.toDate()?.toRelative() ?? arrivalTimePlanned?.toDate()?.toRelative()
+    return arrivalTime?.toDate()?.toRelative()
   }
 
   public var departureTimeInPast: Bool? {
-    return departureTimeEstimated?.toDate()?.isInPast ?? departureTimePlanned?.toDate()?.isInPast
+    return departureTime?.toDate()?.isInPast
   }
 }

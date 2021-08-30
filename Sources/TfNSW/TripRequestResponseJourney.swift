@@ -40,7 +40,7 @@ extension TripRequestResponseJourney {
   }
 
   public var relativeDepartureTime: String? {
-    return legs?.first?.origin?.relativeDepartureTime
+    return legs?.first?.relativeDepartureTime
   }
 
   public var departueTimeInPast: Bool? {
@@ -52,7 +52,7 @@ extension TripRequestResponseJourney {
   }
 
   public var initialProductClass: ProductClass? {
-    return legs?.first?.transportation?.product?.class
+    return legs?.first?.productClass
   }
 
   public var colour: UIColor? {
