@@ -1,4 +1,5 @@
 import Foundation
+import SwiftDate
 
 public struct TripRequestResponseJourneyLegStop: Decodable, Identifiable {
   public var isGlobalId: Bool?
@@ -15,4 +16,28 @@ public struct TripRequestResponseJourneyLegStop: Decodable, Identifiable {
   public var arrivalTimePlanned: String? // A timestamp in YYYY-MM-DDTHH:MM:SSZ format that indicates the planned arrival time. This is the original scheduled time.
   public var arrivalTimeEstimated: String? // A timestamp in YYYY-MM-DDTHH:MM:SSZ format that indicates the estimated arrival time. If real-time information is available then this timestamp is the real-time estimate, otherwise it is the same as the value in arrivalTimePlanned.
   public var properties: LegStopProperties? // Contains additional information about this stop, such as wheelchair accessibility information.
+}
+
+extension TripRequestResponseJourneyLegStop {
+  public var shortNamePlatform: String? {
+    return disassembledName?.replacingOccurrences(of: " Station", with: "")
+  }
+  public var shortName: String? {
+    return disassembledName?.replacingOccurrences(of: " Station", with: "").split(separator: ",").dropLast().joined()
+  }
+  public var departureTimeText: String? {
+    return departureTimeEstimated?.toDate()?.toString(.time(.short)) ?? departureTimePlanned?.toDate()?.toString(.time(.short))
+  }
+  public var arrivalTimeText: String? {
+    return arrivalTimeEstimated?.toDate()?.toString(.time(.short)) ?? arrivalTimePlanned?.toDate()?.toString(.time(.short))
+  }
+  public var relativeDepartureTime: String? {
+    return departureTimeEstimated?.toDate()?.toRelative() ?? departureTimePlanned?.toDate()?.toRelative()
+  }
+  public var relativeArrivalTime: String? {
+    return arrivalTimeEstimated?.toDate()?.toRelative() ?? arrivalTimePlanned?.toDate()?.toRelative()
+  }
+  public var departureTimeInPast: Bool? {
+    return departureTimeEstimated?.toDate()?.isInPast ?? departureTimePlanned?.toDate()?.isInPast
+  }
 }

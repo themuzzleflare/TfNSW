@@ -1,4 +1,5 @@
 import Foundation
+import UIKit
 
 public enum ProductClass: Int, Decodable {
   case train = 1
@@ -51,6 +52,16 @@ extension ProductClass {
       return "Taxi"
     case .car:
       return "Car"
+    }
+  }
+  public var colour: UIColor {
+    switch self {
+    case .train:
+      return UIColor(named: "train")!
+    case .metro:
+      return UIColor(named: "metro")!
+    default:
+      return UIColor(named: "AccentColor")!
     }
   }
 }
