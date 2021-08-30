@@ -21,4 +21,24 @@ extension TripRequestResponseJourney {
   public var totalDurationText: String {
     return secondsToHoursMinutesSecondsStr(seconds: totalDuration)
   }
+
+  public var fromName: String? {
+    return legs?.first?.origin?.shortNamePlatform
+  }
+
+  public var toName: String? {
+    return legs?.last?.destination?.shortName
+  }
+
+  public var relativeDepartureTime: String? {
+    return legs?.first?.origin?.relativeDepartureTime
+  }
+
+  public var departueTimeInPast: Bool? {
+    return legs?.first?.origin?.departureTimeInPast
+  }
+
+  public var transportationNames: String? {
+    return legs?.compactMap { $0.transportation?.disassembledName }.joined(separator: ",")
+  }
 }
