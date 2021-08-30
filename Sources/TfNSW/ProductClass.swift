@@ -20,6 +20,7 @@ public enum ProductClass: Int, Decodable {
 }
 
 extension ProductClass {
+  /// The custom description of the `ProductClass`.
   public var description: String {
     switch self {
     case .train:
@@ -54,6 +55,8 @@ extension ProductClass {
       return "Car"
     }
   }
+
+  /// The colour associated with the `ProductClass`.
   public var colour: UIColor {
     switch self {
     case .train:

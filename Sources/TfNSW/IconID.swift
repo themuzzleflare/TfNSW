@@ -26,6 +26,7 @@ public enum IconID: Int, Decodable {
 }
 
 extension IconID {
+  /// The `ProductClass` of the `IconID`.
   public var productClass: ProductClass {
     switch self {
     case .sydneyTrains, .intercityTrains, .regionalTrains, .temporaryTrains:

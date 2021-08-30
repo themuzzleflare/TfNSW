@@ -10,10 +10,12 @@ public struct AdditionalInfoResponseTimestamps: Decodable {
 }
 
 extension AdditionalInfoResponseTimestamps {
+  /// The `Date` value of `creation`.
   public var creationDate: Date? {
     return creation?.toDate()?.date
   }
 
+  /// The `Date` value of `lastModification`.
   public var lastModificationDate: Date? {
     return lastModification?.toDate()?.date
   }
