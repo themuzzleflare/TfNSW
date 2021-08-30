@@ -1,5 +1,4 @@
 // swift-tools-version:5.3
-
 import PackageDescription
 
 let package = Package(
@@ -15,9 +14,18 @@ let package = Package(
       ]
     )
   ],
+  dependencies: [
+    .package(
+      url: "https://github.com/malcommac/SwiftDate.git",
+      from: "6.3.1"
+    )
+  ],
   targets: [
     .target(
-      name: "TfNSW"
+      name: "TfNSW",
+      dependencies: [
+        "SwiftDate"
+      ]
     )
   ]
 )
