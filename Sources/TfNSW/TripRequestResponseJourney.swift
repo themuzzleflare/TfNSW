@@ -41,4 +41,8 @@ extension TripRequestResponseJourney {
   public var transportationNames: String? {
     return legs?.compactMap { $0.transportation?.disassembledName }.joined(separator: ",")
   }
+
+  public var initialProductClass: ProductClass? {
+    return legs?.first?.transportation?.product?.class
+  }
 }
