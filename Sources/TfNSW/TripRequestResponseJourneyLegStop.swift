@@ -21,7 +21,7 @@ public struct TripRequestResponseJourneyLegStop: Decodable, Identifiable {
 
   public var niveau: Int?
 
-  /// If available, contains information about this location's parent location. For example, if the stop has a type of platform, then this field may contain information about the station in which the platform is located.
+  /// If available, contains information about this location's parent location. For example, if the stop has a type of `platform`, then this field may contain information about the station in which the platform is located.
   public var parent: ParentLocation?
 
   public var productClasses: [ProductClass]?

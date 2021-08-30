@@ -28,6 +28,9 @@ public struct TripRequestResponseJourneyLeg: Decodable {
   /// This elements contains a list of coordinates that this journey leg follows. A line between can be plotted between these coordinates in order when representing the journey on a map in order to show where the vehicle travels (or for a walking leg, the path to be walked).
   public var coords: [[Double]]?
 
+  /// Contains information for how to interchange between the end of one leg to the next journey leg.
+  public var interchange: TripRequestResponseJourneyLegInterchange?
+
   /// Contains additional information about this journey leg, such as wheelchair accessibility information.
   public var properties: JourneyLegProperties?
 }
