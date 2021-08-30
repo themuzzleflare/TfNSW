@@ -7,3 +7,20 @@ public enum AlertPriority: String, Decodable {
   case high
   case veryHigh
 }
+
+extension AlertPriority {
+  public var description: String {
+    switch self {
+    case .veryLow:
+      return "Very Low"
+    case .low:
+      return "Low"
+    case .normal:
+      return "Normal"
+    case .high:
+      return "High"
+    case .veryHigh:
+      return "Very High"
+    }
+  }
+}

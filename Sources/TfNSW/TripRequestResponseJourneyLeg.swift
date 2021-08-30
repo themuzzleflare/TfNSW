@@ -33,46 +33,65 @@ public struct TripRequestResponseJourneyLeg: Decodable {
 }
 
 extension TripRequestResponseJourneyLeg {
+  /// The value of the `durationTextNode` displayed on a `LegCellNode`.
   public var durationText: String {
     return secondsToHoursMinutesSecondsStr(seconds: duration ?? 0)
   }
 
+  /// Whether or not both the vehicle and the stop are wheelchair-accessible.
   public var isWheelchairAccessible: Bool? {
     return properties?.PlanLowFloorVehicle == .oneValue && properties?.PlanWheelChairAccess == .oneValue ? true : false
   }
 
+  /// The value of the `fromNameTextNode` displayed on a `LegCellNode`.
   public var fromName: String? {
     return origin?.shortNamePlatform
   }
 
+  /// The value of the `toNameTextNode` displayed on a `LegCellNode`.
   public var toName: String? {
     return destination?.shortNamePlatform
   }
 
+  /// The value of the `fromTimeTextNode` displayed on a `LegCellNode`.
   public var fromTime: String? {
     return origin?.departureTimeText
   }
 
+  /// The value of the `toTimeTextNode` displayed on a `LegCellNode`.
   public var toTime: String? {
     return destination?.arrivalTimeText
   }
 
+  /// The relative departure time of the leg's origin.
   public var relativeDepartureTime: String? {
     return origin?.relativeDepartureTime
   }
 
+  /// The relative wait time between the arrival of the previous leg and the departure of the current leg.
+  public func relativeWaitTime(for leg: TripRequestResponseJourneyLeg) -> String? {
+    let previousLegArrivalTime = leg.destination?.arrivalTime?.toDate()
+    let currentLegDepartureTime = origin?.departureTime?.toDate()
+    let difference = currentLegDepartureTime?.difference(in: .second, from: previousLegArrivalTime!)
+    return "\(secondsToHoursMinutesSecondsStr(seconds: difference ?? 0)) wait"
+  }
+
+  /// Whether or not the departure date and time of the leg's origin is in the past.
   public var departueTimeInPast: Bool? {
     return origin?.departureTimeInPast
   }
 
+  /// The value of the `transportationNameTextNode` displayed on a `LegCellNode`.
   public var transportationName: String? {
     return transportation?.disassembledName
   }
 
+  /// The `ProductClass` of the leg's transportation.
   public var productClass: ProductClass? {
     return transportation?.product?.class
   }
 
+  /// The background colour of the `relativeTimeDisplayNode` displayed on a `LegCellNode`.
   public var colour: UIColor? {
     return departueTimeInPast ?? false ? productClass?.colour.withAlphaComponent(0.500) : productClass?.colour
   }
