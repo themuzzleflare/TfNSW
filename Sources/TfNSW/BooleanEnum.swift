@@ -8,6 +8,7 @@ public enum BooleanEnum: String, Decodable {
 }
 
 extension BooleanEnum {
+  /// The  `Bool` value of the `BooleanEnum`.
   public var boolValue: Bool {
     switch self {
     case .trueValue, .oneValue:
