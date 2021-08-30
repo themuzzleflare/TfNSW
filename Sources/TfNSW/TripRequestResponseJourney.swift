@@ -30,6 +30,14 @@ extension TripRequestResponseJourney {
     return legs?.last?.destination?.shortName
   }
 
+  public var fromTime: String? {
+    return legs?.first?.origin?.departureTimeText
+  }
+
+  public var toTime: String? {
+    return legs?.last?.destination?.arrivalTimeText
+  }
+
   public var relativeDepartureTime: String? {
     return legs?.first?.origin?.relativeDepartureTime
   }
