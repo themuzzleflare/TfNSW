@@ -43,18 +43,22 @@ public struct TripRequestResponseJourneyLegStop: Decodable, Identifiable {
 }
 
 extension TripRequestResponseJourneyLegStop {
+  /// The `disassembledName` of the stop, with occurences of "Station" removed.
   public var shortNamePlatform: String? {
     return disassembledName?.replacingOccurrences(of: " Station", with: "")
   }
-  
+
+  /// The `disassembledName` of the stop, with occurences of "Station" and "Platform" removed.
   public var shortName: String? {
     return disassembledName?.replacingOccurrences(of: " Station", with: "").split(separator: ",").dropLast().joined()
   }
 
+  /// If available, `departureTimeEstimated`. Otherwise, `departureTimePlanned`.
   public var departureTime: String? {
     return departureTimeEstimated ?? departureTimePlanned
   }
 
+  /// If available, `arrivalTimeEstimated`. Otherwise, `arrivalTimePlanned`.
   public var arrivalTime: String? {
     return arrivalTimeEstimated ?? arrivalTimePlanned
   }
