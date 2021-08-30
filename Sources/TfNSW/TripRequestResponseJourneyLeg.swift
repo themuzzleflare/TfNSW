@@ -35,7 +35,7 @@ public struct TripRequestResponseJourneyLeg: Decodable {
 extension TripRequestResponseJourneyLeg {
   /// The value of the `durationTextNode` displayed on a `LegCellNode`.
   public var durationText: String {
-    return secondsToHoursMinutesSecondsStr(seconds: duration ?? 0)
+    return duration?.secondsToHoursMinutesSecondsStr ?? ""
   }
 
   /// Whether or not both the vehicle and the stop are wheelchair-accessible.
@@ -73,7 +73,7 @@ extension TripRequestResponseJourneyLeg {
     let previousLegArrivalTime = leg.destination?.arrivalTime?.toDate()
     let currentLegDepartureTime = origin?.departureTime?.toDate()
     let difference = currentLegDepartureTime?.difference(in: .second, from: previousLegArrivalTime!)
-    return "\(secondsToHoursMinutesSecondsStr(seconds: difference ?? 0)) wait"
+    return "\(difference?.secondsToHoursMinutesSecondsStr ?? "") wait"
   }
 
   /// Whether or not the departure date and time of the leg's origin is in the past.
