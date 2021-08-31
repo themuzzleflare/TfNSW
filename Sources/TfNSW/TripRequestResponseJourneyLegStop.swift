@@ -19,7 +19,7 @@ public struct TripRequestResponseJourneyLegStop: Decodable, Identifiable {
   /// Contains exactly two values: the first value is the latitude, the second value is the longitude.
   public var coord: [Double]?
 
-  public var niveau: Int?
+  public var niveau: Double?
 
   /// If available, contains information about this location's parent location. For example, if the stop has a type of `platform`, then this field may contain information about the station in which the platform is located.
   public var parent: ParentLocation?
