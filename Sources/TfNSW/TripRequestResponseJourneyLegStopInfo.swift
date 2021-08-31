@@ -21,4 +21,7 @@ public struct TripRequestResponseJourneyLegStopInfo: Decodable {
 
   /// This is short summary that can be used as a heading for the alert content. It may contain HTML tags and/or HTML entities.
   public var subtitle: String?
+
+  /// This is the descriptive alert content. It may contain HTML tags and/or HTML entities.
+  public var content: String?
 }

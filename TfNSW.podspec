@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name = 'TfNSW'
-  s.version = '19.0.0'
+  s.version = '20.0.0'
   s.swift_version = '5.4'
   s.author = { 'Paul Tavitian' => 'paul@tavitian.cloud' }
   s.social_media_url = 'https://twitter.com/TheMuzzleFlare'
