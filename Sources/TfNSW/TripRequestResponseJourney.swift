@@ -23,7 +23,7 @@ extension TripRequestResponseJourney {
 
   /// The value of the `totalDurationTextNode` displayed on a `JourneyCellNode`.
   public var totalDurationText: String {
-    return totalDuration.secondsToHoursMinutesSecondsStr
+    return totalDuration.secondsToHoursMinutesSeconds
   }
 
   /// The value of the `fromNameTextNode` displayed on a `JourneyCellNode`.
