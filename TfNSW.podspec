@@ -1,14 +1,17 @@
-Pod::Spec.new do |s|
-  s.name = 'TfNSW'
-  s.version = '20.0.0'
-  s.swift_version = '5.4'
-  s.author = { 'Paul Tavitian' => 'paul@tavitian.cloud' }
-  s.social_media_url = 'https://twitter.com/TheMuzzleFlare'
-  s.license = 'MIT'
-  s.homepage = 'https://github.com/themuzzleflare/TfNSW'
-  s.source = { :git => 'https://github.com/themuzzleflare/TfNSW.git', :tag => s.version.to_s }
-  s.summary = 'TfNSW Swift library'
-  s.platform = :ios, '13.0'
-  s.source_files = 'Sources/**/*.swift'
-  s.dependency 'SwiftDate'
+Pod::Spec.new do |spec|
+  spec.name = 'TfNSW'
+  spec.version = '21.0.0'
+  spec.swift_version = '5.4'
+  spec.author = { 'Paul Tavitian' => 'paul@tavitian.cloud' }
+  spec.social_media_url = 'https://twitter.com/TheMuzzleFlare'
+  spec.license = 'MIT'
+  spec.homepage = 'https://github.com/themuzzleflare/TfNSW'
+  spec.source = { :git => 'https://github.com/themuzzleflare/TfNSW.git', :tag => spec.version.to_s }
+  spec.summary = 'TfNSW Swift library'
+
+  spec.platform = :ios, '13.0'
+
+  spec.dependency 'SwiftDate'
+
+  spec.source_files = 'Sources/**/*.swift'
 end
