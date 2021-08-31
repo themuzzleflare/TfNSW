@@ -1,7 +1,7 @@
 Pod::Spec.new do |spec|
   spec.name = 'TfNSW'
-  spec.version = '21.0.0'
-  spec.swift_version = '5.4'
+  spec.version = '22.0.0'
+  spec.swift_versions = ['5.0', '5.1', '5.2', '5.3', '5.4']
   spec.author = { 'Paul Tavitian' => 'paul@tavitian.cloud' }
   spec.social_media_url = 'https://twitter.com/TheMuzzleFlare'
   spec.license = 'MIT'
@@ -12,6 +12,7 @@ Pod::Spec.new do |spec|
   spec.platform = :ios, '13.0'
 
   spec.dependency 'SwiftDate'
+  spec.frameworks = 'Foundation', 'UIKit'
 
   spec.source_files = 'Sources/**/*.swift'
 end
