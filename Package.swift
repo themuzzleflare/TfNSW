@@ -27,8 +27,5 @@ let package = Package(
         "SwiftDate"
       ]
     )
-  ],
-  swiftLanguageVersions: [
-    .v5
   ]
 )
