@@ -24,4 +24,6 @@ public struct TripRequestResponseJourneyLegStopInfo: Decodable {
 
   /// This is the descriptive alert content. It may contain HTML tags and/or HTML entities.
   public var content: String?
+
+  public var properties: LegStopInfoProperties?
 }
