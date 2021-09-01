@@ -1,5 +1,6 @@
 import Foundation
 import SwiftDate
+import CoreLocation
 
 public struct TripRequestResponseJourneyLegStop: Decodable, Identifiable {
   public var isGlobalId: Bool?
@@ -81,5 +82,9 @@ extension TripRequestResponseJourneyLegStop {
 
   public var departureTimeInPast: Bool? {
     return departureTime?.toDate()?.isInPast
+  }
+
+  public var location: CLLocation? {
+    return CLLocation(latitude: coord![0], longitude: coord![1])
   }
 }
