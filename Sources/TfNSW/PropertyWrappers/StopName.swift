@@ -6,6 +6,6 @@ import Foundation
   }
 
   public init(wrappedValue: String?) {
-    self.wrappedValue = wrappedValue?.replacingOccurrences(of: "University", with: "Uni")
+    self.wrappedValue = wrappedValue
   }
 }
