@@ -9,10 +9,10 @@ public struct TripRequestResponseJourneyLegStop: Decodable, Identifiable {
   public var id: String?
 
   /// This is the long version of the location name, which may include the suburb or other information.
-  public var name: String?
+  @StopName public var name: String?
 
   /// This is the short version of the location name, which does not include the suburb or other information.
-  public var disassembledName: String?
+  @StopName public var disassembledName: String?
 
   /// This is the type of location being returned. It will typically represent a specific stop or platform. = ['poi', 'singlehouse', 'stop', 'platform', 'street', 'locality', 'suburb', 'unknown'].
   public var type: LocationType?

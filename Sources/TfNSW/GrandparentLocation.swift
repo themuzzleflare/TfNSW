@@ -5,7 +5,7 @@ public struct GrandparentLocation: Decodable {
   public var id: String?
 
   /// This is the long version of the location name, which may include the suburb or other information.
-  public var name: String?
+  @StopName public var name: String?
 
   /// This is the type of location being returned. It may represent a stop or platform that a public transport service physically stops at for passenger boarding, or it may represent somebody's house. A value of `unknown` likely indicates bad data coming from the server. If a location is returned with this type, you can safely ignore it. = ['poi', 'singlehouse', 'stop', 'platform', 'street', 'locality', 'suburb', 'unknown'].
   public var type: LocationType?

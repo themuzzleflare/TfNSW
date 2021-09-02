@@ -92,6 +92,12 @@ extension ProductClass {
       return .train
     case .metro:
       return .metro
+    case .bus:
+      return .bus
+    case .lightRail:
+      return .lightRail
+    case .ferry:
+      return .ferry
     default:
       return .accent
     }
