@@ -41,6 +41,28 @@ public struct TripRequestResponseJourneyLegStop: Decodable, Identifiable {
 
   /// Contains additional information about this stop, such as wheelchair accessibility information.
   public var properties: LegStopProperties?
+
+  public enum CodingKeys: String, CodingKey {
+    case isGlobalId, id, name, disassembledName, type, coord, niveau, parent, productClasses, departureTimePlanned, departureTimeEstimated, arrivalTimePlanned, arrivalTimeEstimated, properties
+  }
+
+  public init(from decoder: Decoder) throws {
+    let values = try decoder.container(keyedBy: CodingKeys.self)
+    isGlobalId = try values.decodeIfPresent(Bool.self, forKey: .isGlobalId)
+    id = try values.decodeIfPresent(String.self, forKey: .id)
+    name = try values.decodeIfPresent(String.self, forKey: .name)
+    disassembledName = try values.decodeIfPresent(String.self, forKey: .disassembledName)
+    type = try values.decodeIfPresent(LocationType.self, forKey: .type)
+    coord = try values.decodeIfPresent([Double].self, forKey: .coord)
+    niveau = try values.decodeIfPresent(Int.self, forKey: .niveau)
+    parent = try values.decodeIfPresent(ParentLocation.self, forKey: .parent)
+    productClasses = try values.decodeIfPresent([ProductClass].self, forKey: .productClasses)
+    departureTimePlanned = try values.decodeIfPresent(String.self, forKey: .departureTimePlanned)
+    departureTimeEstimated = try values.decodeIfPresent(String.self, forKey: .departureTimeEstimated)
+    arrivalTimePlanned = try values.decodeIfPresent(String.self, forKey: .arrivalTimePlanned)
+    arrivalTimeEstimated = try values.decodeIfPresent(String.self, forKey: .arrivalTimeEstimated)
+    properties = try values.decodeIfPresent(LegStopProperties.self, forKey: .properties)
+  }
 }
 
 extension TripRequestResponseJourneyLegStop {
