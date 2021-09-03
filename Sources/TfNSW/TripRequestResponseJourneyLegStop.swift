@@ -51,7 +51,7 @@ public struct TripRequestResponseJourneyLegStop: Decodable, Identifiable {
     isGlobalId = try values.decodeIfPresent(Bool.self, forKey: .isGlobalId)
     id = try values.decodeIfPresent(String.self, forKey: .id)
     name = try values.decodeIfPresent(String.self, forKey: .name)
-    disassembledName = try values.decode(String.self, forKey: .disassembledName)
+    disassembledName = try values.decodeIfPresent(String.self, forKey: .disassembledName)
     type = try values.decodeIfPresent(LocationType.self, forKey: .type)
     coord = try values.decodeIfPresent([Double].self, forKey: .coord)
     niveau = try values.decodeIfPresent(Int.self, forKey: .niveau)
