@@ -25,3 +25,11 @@ public enum LocationType: String, Decodable {
   /// Unknown.
   case unknown
 }
+
+#if os(macOS)
+
+import Vapor
+
+extension LocationType: Content {}
+
+#endif

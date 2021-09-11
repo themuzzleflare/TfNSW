@@ -20,3 +20,11 @@ extension AdditionalInfoResponseTimestamps {
     return lastModification?.toDate()?.date
   }
 }
+
+#if os(macOS)
+
+import Vapor
+
+extension AdditionalInfoResponseTimestamps: Content {}
+
+#endif

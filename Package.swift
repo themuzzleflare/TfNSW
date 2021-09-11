@@ -19,13 +19,26 @@ let package = Package(
     .package(
       url: "https://github.com/malcommac/SwiftDate.git",
       from: "6.3.1"
+    ),
+    .package(
+      url: "https://github.com/vapor/vapor.git",
+      from: "4.48.5"
     )
   ],
   targets: [
     .target(
       name: "TfNSW",
       dependencies: [
-        "SwiftDate"
+        "SwiftDate",
+        .product(
+          name: "Vapor",
+          package: "vapor",
+          condition: .when(
+            platforms: [
+              .macOS
+            ]
+          )
+        )
       ]
     )
   ]

@@ -1,4 +1,5 @@
 import Foundation
+import CoreLocation
 
 public struct TripRequestResponseJourneyLegInterchange: Decodable {
   /// This is a description of the interchange.
@@ -8,5 +9,13 @@ public struct TripRequestResponseJourneyLegInterchange: Decodable {
   public var type: ProductClass?
 
   /// This is a list of coordinates that makes up the path of the interchange.
-  public var coords: [[Double]]?
+  public var coords: [[CLLocationDegrees]]?
 }
+
+#if os(macOS)
+
+import Vapor
+
+extension TripRequestResponseJourneyLegInterchange: Content {}
+
+#endif

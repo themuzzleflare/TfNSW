@@ -108,3 +108,11 @@ extension ProductClass {
   }
   #endif
 }
+
+#if os(macOS)
+
+import Vapor
+
+extension ProductClass: Content {}
+
+#endif

@@ -21,3 +21,11 @@ public struct GrandparentLocation: Decodable {
     type = try values.decodeIfPresent(LocationType.self, forKey: .type)
   }
 }
+
+#if os(macOS)
+
+import Vapor
+
+extension GrandparentLocation: Content {}
+
+#endif

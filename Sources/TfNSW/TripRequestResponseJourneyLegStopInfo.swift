@@ -27,3 +27,11 @@ public struct TripRequestResponseJourneyLegStopInfo: Decodable {
 
   public var properties: LegStopInfoProperties?
 }
+
+#if os(macOS)
+
+import Vapor
+
+extension TripRequestResponseJourneyLegStopInfo: Content {}
+
+#endif

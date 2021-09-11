@@ -18,7 +18,7 @@ public struct TripRequestResponseJourneyLegStop: Decodable, Identifiable {
   public var type: LocationType?
 
   /// Contains exactly two values: the first value is the latitude, the second value is the longitude.
-  public var coord: [Double]?
+  public var coord: [CLLocationDegrees]?
 
   public var niveau: Int?
 
@@ -53,7 +53,7 @@ public struct TripRequestResponseJourneyLegStop: Decodable, Identifiable {
     name = try values.decodeIfPresent(String.self, forKey: .name)
     disassembledName = try values.decodeIfPresent(String.self, forKey: .disassembledName)
     type = try values.decodeIfPresent(LocationType.self, forKey: .type)
-    coord = try values.decodeIfPresent([Double].self, forKey: .coord)
+    coord = try values.decodeIfPresent([CLLocationDegrees].self, forKey: .coord)
     niveau = try values.decodeIfPresent(Int.self, forKey: .niveau)
     parent = try values.decodeIfPresent(ParentLocation.self, forKey: .parent)
     productClasses = try values.decodeIfPresent([ProductClass].self, forKey: .productClasses)
@@ -111,3 +111,11 @@ extension TripRequestResponseJourneyLegStop {
     return CLLocation(latitude: coord![0], longitude: coord![1])
   }
 }
+
+#if os(macOS)
+
+import Vapor
+
+extension TripRequestResponseJourneyLegStop: Content {}
+
+#endif

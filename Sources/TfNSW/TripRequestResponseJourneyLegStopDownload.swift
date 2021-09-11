@@ -7,3 +7,11 @@ public struct TripRequestResponseJourneyLegStopDownload: Decodable {
   /// This is the URL for the download.
   public var url: String?
 }
+
+#if os(macOS)
+
+import Vapor
+
+extension TripRequestResponseJourneyLegStopDownload: Content {}
+
+#endif

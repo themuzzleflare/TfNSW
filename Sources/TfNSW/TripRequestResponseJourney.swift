@@ -76,3 +76,11 @@ extension TripRequestResponseJourney {
   }
   #endif
 }
+
+#if os(macOS)
+
+import Vapor
+
+extension TripRequestResponseJourney: Content {}
+
+#endif

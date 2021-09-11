@@ -21,3 +21,11 @@ public struct LegStopProperties: Decodable {
 
   public var platform: String?
 }
+
+#if os(macOS)
+
+import Vapor
+
+extension LegStopProperties: Content {}
+
+#endif
