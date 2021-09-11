@@ -1,3 +1,5 @@
+#if os(iOS)
+
 import Foundation
 import UIKit
 
@@ -26,3 +28,5 @@ internal extension UIColor {
     return UIColor(named: "ferry") ?? UIColor(red: 0.333, green: 0.690, blue: 0.275, alpha: 1.000)
   }
 }
+
+#endif

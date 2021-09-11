@@ -1,5 +1,8 @@
 import Foundation
+
+#if canImport(UIKit)
 import UIKit
+#endif
 
 public struct TripRequestResponseJourneyLeg: Decodable {
   /// The approximate amount of time in seconds required to complete this journey leg.
@@ -94,8 +97,10 @@ extension TripRequestResponseJourneyLeg {
     return transportation?.product?.class
   }
 
+  #if os(iOS)
   /// The background colour of the `relativeTimeDisplayNode` displayed on a `LegCellNode`.
   public var colour: UIColor? {
     return departueTimeInPast ?? false ? productClass?.colour.withAlphaComponent(0.500) : productClass?.colour
   }
+  #endif
 }

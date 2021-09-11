@@ -1,5 +1,8 @@
 import Foundation
+
+#if canImport(UIKit)
 import UIKit
+#endif
 
 public enum ProductClass: Int, Decodable {
   /// Train.
@@ -85,6 +88,7 @@ extension ProductClass {
     }
   }
 
+  #if os(iOS)
   /// The colour associated with the `ProductClass`.
   public var colour: UIColor {
     switch self {
@@ -102,4 +106,5 @@ extension ProductClass {
       return .accent
     }
   }
+  #endif
 }
