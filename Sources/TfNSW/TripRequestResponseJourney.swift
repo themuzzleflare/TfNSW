@@ -1,8 +1,5 @@
 import Foundation
-
-#if canImport(UIKit)
 import UIKit
-#endif
 
 public struct TripRequestResponseJourney: Decodable {
   public var rating: Int?
@@ -69,18 +66,8 @@ extension TripRequestResponseJourney {
     return legs?.first?.productClass
   }
 
-  #if os(iOS)
   /// The background colour of the `relativeTimeDisplayNode` displayed on a `JourneyCellNode`.
   public var colour: UIColor? {
     return departueTimeInPast ?? false ? initialProductClass?.colour.withAlphaComponent(0.500) : initialProductClass?.colour
   }
-  #endif
 }
-
-#if os(macOS)
-
-import Vapor
-
-extension TripRequestResponseJourney: Content {}
-
-#endif

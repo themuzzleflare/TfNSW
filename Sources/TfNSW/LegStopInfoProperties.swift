@@ -13,11 +13,3 @@ public struct LegStopInfoProperties: Decodable {
 
   public var speechText: String?
 }
-
-#if os(macOS)
-
-import Vapor
-
-extension LegStopInfoProperties: Content {}
-
-#endif

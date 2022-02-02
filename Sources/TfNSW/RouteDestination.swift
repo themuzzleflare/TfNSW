@@ -6,11 +6,3 @@ public struct RouteDestination: Decodable {
   
   public var type: LocationType?
 }
-
-#if os(macOS)
-
-import Vapor
-
-extension RouteDestination: Content {}
-
-#endif

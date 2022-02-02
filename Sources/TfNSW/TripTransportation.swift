@@ -28,11 +28,3 @@ public struct TripTransportation: Decodable {
   /// Contains additional properties about this route.
   public var properties: RouteProperties?
 }
-
-#if os(macOS)
-
-import Vapor
-
-extension TripTransportation: Content {}
-
-#endif

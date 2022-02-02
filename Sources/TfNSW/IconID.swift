@@ -87,11 +87,3 @@ extension IconID {
     }
   }
 }
-
-#if os(macOS)
-
-import Vapor
-
-extension IconID: Content {}
-
-#endif

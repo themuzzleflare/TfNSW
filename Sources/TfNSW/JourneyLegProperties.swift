@@ -7,11 +7,3 @@ public struct JourneyLegProperties: Decodable {
   /// This indicates whether or not the stop is wheelchair accessible.
   public var PlanWheelChairAccess: BooleanEnum?
 }
-
-#if os(macOS)
-
-import Vapor
-
-extension JourneyLegProperties: Content {}
-
-#endif

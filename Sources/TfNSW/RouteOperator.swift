@@ -7,11 +7,3 @@ public struct RouteOperator: Decodable {
   /// Contains the name of the operator of the route.
   public var name: String?
 }
-
-#if os(macOS)
-
-import Vapor
-
-extension RouteOperator: Content {}
-
-#endif

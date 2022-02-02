@@ -1,9 +1,7 @@
 import Foundation
 import CoreLocation
-
-#if canImport(UIKit)
 import UIKit
-#endif
+import SwiftDate
 
 public struct TripRequestResponseJourneyLeg: Decodable {
   /// The approximate amount of time in seconds required to complete this journey leg.
@@ -77,8 +75,8 @@ extension TripRequestResponseJourneyLeg {
 
   /// The relative wait time between the arrival of the previous leg and the departure of the current leg.
   public func relativeWaitTime(for leg: TripRequestResponseJourneyLeg) -> String? {
-    let previousLegArrivalTime = leg.destination?.arrivalTime?.toDate()
-    let currentLegDepartureTime = origin?.departureTime?.toDate()
+    let previousLegArrivalTime = leg.destination?.arrivalTime?.toDate(region: .current)
+    let currentLegDepartureTime = origin?.departureTime?.toDate(region: .current)
     let difference = currentLegDepartureTime?.difference(in: .second, from: previousLegArrivalTime!)
     return "\(difference?.intervalString ?? "") wait"
   }
@@ -98,18 +96,8 @@ extension TripRequestResponseJourneyLeg {
     return transportation?.product?.class
   }
 
-  #if os(iOS)
   /// The background colour of the `relativeTimeDisplayNode` displayed on a `LegCellNode`.
   public var colour: UIColor? {
     return departueTimeInPast ?? false ? productClass?.colour.withAlphaComponent(0.500) : productClass?.colour
   }
-  #endif
 }
-
-#if os(macOS)
-
-import Vapor
-
-extension TripRequestResponseJourneyLeg: Content {}
-
-#endif

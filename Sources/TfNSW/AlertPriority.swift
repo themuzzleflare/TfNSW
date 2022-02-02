@@ -34,11 +34,3 @@ extension AlertPriority {
     }
   }
 }
-
-#if os(macOS)
-
-import Vapor
-
-extension AlertPriority: Content {}
-
-#endif

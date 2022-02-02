@@ -87,23 +87,23 @@ extension TripRequestResponseJourneyLegStop {
   }
 
   public var departureTimeText: String? {
-    return departureTime?.toDate()?.toString(.time(.short))
+    return departureTime?.toDate(region: .current)?.toString(.time(.short))
   }
 
   public var arrivalTimeText: String? {
-    return arrivalTime?.toDate()?.toString(.time(.short))
+    return arrivalTime?.toDate(region: .current)?.toString(.time(.short))
   }
 
   public var relativeDepartureTime: String? {
-    return departureTime?.toDate()?.toRelative()
+    return departureTime?.toDate(region: .current)?.toRelative()
   }
 
   public var relativeArrivalTime: String? {
-    return arrivalTime?.toDate()?.toRelative()
+    return arrivalTime?.toDate(region: .current)?.toRelative()
   }
 
   public var departureTimeInPast: Bool? {
-    return departureTime?.toDate()?.isInPast
+    return departureTime?.toDate(region: .current)?.isInPast
   }
 
   /// The `CLLocation` of the stop, based on the latitude and longitude values in `coord`.
@@ -111,11 +111,3 @@ extension TripRequestResponseJourneyLegStop {
     return CLLocation(latitude: coord![0], longitude: coord![1])
   }
 }
-
-#if os(macOS)
-
-import Vapor
-
-extension TripRequestResponseJourneyLegStop: Content {}
-
-#endif

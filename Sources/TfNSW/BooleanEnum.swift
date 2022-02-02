@@ -25,11 +25,3 @@ extension BooleanEnum {
     }
   }
 }
-
-#if os(macOS)
-
-import Vapor
-
-extension BooleanEnum: Content {}
-
-#endif

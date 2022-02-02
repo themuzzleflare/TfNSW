@@ -24,11 +24,3 @@ import Foundation
     wrappedValue = stringValue
   }
 }
-
-#if os(macOS)
-
-import Vapor
-
-extension StopName: Content {}
-
-#endif

@@ -11,11 +11,3 @@ public struct TripRequestResponseJourneyLegInterchange: Decodable {
   /// This is a list of coordinates that makes up the path of the interchange.
   public var coords: [[CLLocationDegrees]]?
 }
-
-#if os(macOS)
-
-import Vapor
-
-extension TripRequestResponseJourneyLegInterchange: Content {}
-
-#endif

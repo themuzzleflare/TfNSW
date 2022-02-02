@@ -35,11 +35,3 @@ public struct ParentLocation: Decodable {
     properties = try values.decodeIfPresent(ParentProperties.self, forKey: .properties)
   }
 }
-
-#if os(macOS)
-
-import Vapor
-
-extension ParentLocation: Content {}
-
-#endif

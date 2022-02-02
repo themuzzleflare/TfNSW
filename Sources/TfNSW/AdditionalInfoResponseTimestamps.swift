@@ -12,19 +12,11 @@ public struct AdditionalInfoResponseTimestamps: Decodable {
 extension AdditionalInfoResponseTimestamps {
   /// The `Date` value of `creation`.
   public var creationDate: Date? {
-    return creation?.toDate()?.date
+    return creation?.toDate(region: .current)?.date
   }
 
   /// The `Date` value of `lastModification`.
   public var lastModificationDate: Date? {
-    return lastModification?.toDate()?.date
+    return lastModification?.toDate(region: .current)?.date
   }
 }
-
-#if os(macOS)
-
-import Vapor
-
-extension AdditionalInfoResponseTimestamps: Content {}
-
-#endif

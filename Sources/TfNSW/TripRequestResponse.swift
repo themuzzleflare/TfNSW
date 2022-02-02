@@ -7,11 +7,3 @@ public struct TripRequestResponse: Decodable {
   /// Contains zero or more journeys found based on the input parameters.
   public var journeys: [TripRequestResponseJourney]?
 }
-
-#if os(macOS)
-
-import Vapor
-
-extension TripRequestResponse: Content {}
-
-#endif

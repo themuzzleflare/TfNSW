@@ -14,11 +14,3 @@ public struct RouteProperties: Decodable {
 
   public var FrequencyLine: String?
 }
-
-#if os(macOS)
-
-import Vapor
-
-extension RouteProperties: Content {}
-
-#endif
