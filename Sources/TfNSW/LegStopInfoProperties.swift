@@ -6,10 +6,10 @@ public struct LegStopInfoProperties: Decodable {
   public var infoType: String?
   
   public var appliesTo: String?
-
+  
   public var stopIDglobalID: String?
   
   public var smsText: String?
-
+  
   public var speechText: String?
 }

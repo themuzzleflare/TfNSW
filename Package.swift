@@ -18,7 +18,7 @@ let package = Package(
   dependencies: [
     .package(
       url: "https://github.com/malcommac/SwiftDate.git",
-      from: "6.3.1"
+      from: "7.0.0"
     )
   ],
   targets: [

@@ -3,13 +3,13 @@ import Foundation
 public enum BooleanEnum: String, Decodable {
   /// A value of "true".
   case trueValue = "true"
-
+  
   /// A value of "false".
   case falseValue = "false"
-
+  
   /// A value of "1".
   case oneValue = "1"
-
+  
   /// A value of "0".
   case zeroValue = "0"
 }
