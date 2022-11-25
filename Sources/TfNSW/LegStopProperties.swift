@@ -9,6 +9,8 @@ public struct LegStopProperties: Decodable {
   
   public var AREA_NIVEAU_DIVA: String?
   
+  public var occupancy: String?
+  
   public var realtimeStatus: [String]?
   
   public var NumberOfCars: String?
