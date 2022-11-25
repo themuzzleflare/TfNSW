@@ -2,7 +2,7 @@ import Foundation
 import CoreLocation
 import SwiftDate
 
-public struct TripRequestResponseJourneyLegStop: Decodable, Identifiable {
+public struct TripRequestResponseJourneyLegStop: Decodable {
   public var isGlobalId: Bool?
   
   /// This is a unique ID for the returned location. Certain types of ID can be used for subsequent searches performed with `stop_finder`, or can be used as the origin or destination in an `trip` request. The format of a location ID differs greatly, depending on the type of location it is.
@@ -42,8 +42,10 @@ public struct TripRequestResponseJourneyLegStop: Decodable, Identifiable {
   /// Contains additional information about this stop, such as wheelchair accessibility information.
   public var properties: LegStopProperties?
   
+  public var isCancelled: Bool?
+  
   public enum CodingKeys: String, CodingKey {
-    case isGlobalId, id, name, disassembledName, type, coord, niveau, parent, productClasses, departureTimePlanned, departureTimeEstimated, arrivalTimePlanned, arrivalTimeEstimated, properties
+    case isGlobalId, id, name, disassembledName, type, coord, niveau, parent, productClasses, departureTimePlanned, departureTimeEstimated, arrivalTimePlanned, arrivalTimeEstimated, properties, isCancelled
   }
   
   public init(from decoder: Decoder) throws {
@@ -62,6 +64,7 @@ public struct TripRequestResponseJourneyLegStop: Decodable, Identifiable {
     arrivalTimePlanned = try values.decodeIfPresent(String.self, forKey: .arrivalTimePlanned)
     arrivalTimeEstimated = try values.decodeIfPresent(String.self, forKey: .arrivalTimeEstimated)
     properties = try values.decodeIfPresent(LegStopProperties.self, forKey: .properties)
+    isCancelled = try values.decodeIfPresent(Bool.self, forKey: .isCancelled)
   }
 }
 

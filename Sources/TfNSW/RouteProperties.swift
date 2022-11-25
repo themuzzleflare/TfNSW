@@ -10,6 +10,8 @@ public struct RouteProperties: Decodable {
   
   public var lineDisplay: String?
   
+  public var AVMSTripID: String?
+  
   public var RealtimeTripId: String?
   
   public var FrequencyLine: String?

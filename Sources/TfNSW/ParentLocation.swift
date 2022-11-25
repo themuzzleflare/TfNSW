@@ -1,4 +1,5 @@
 import Foundation
+import CoreLocation
 
 public struct ParentLocation: Decodable {
   public var isGlobalId: Bool?
@@ -20,8 +21,12 @@ public struct ParentLocation: Decodable {
   
   public var properties: ParentProperties?
   
+  public var coord: [CLLocationDegrees]?
+  
+  public var niveau: Int?
+  
   public enum CodingKeys: String, CodingKey {
-    case isGlobalId, id, name, disassembledName, type, parent, properties
+    case isGlobalId, id, name, disassembledName, type, parent, properties, coord, niveau
   }
   
   public init(from decoder: Decoder) throws {
@@ -33,5 +38,7 @@ public struct ParentLocation: Decodable {
     type = try values.decodeIfPresent(LocationType.self, forKey: .type)
     parent = try values.decodeIfPresent(GrandparentLocation.self, forKey: .parent)
     properties = try values.decodeIfPresent(ParentProperties.self, forKey: .properties)
+    coord = try values.decodeIfPresent([CLLocationDegrees].self, forKey: .coord)
+    niveau = try values.decodeIfPresent(Int.self, forKey: .niveau)
   }
 }
