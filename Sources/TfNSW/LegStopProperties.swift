@@ -1,6 +1,8 @@
 import Foundation
 
 public struct LegStopProperties: Decodable {
+  public var stopId: String?
+  
   /// Describes a list of downloadable files relevant to this location.
   public var downloads: [TripRequestResponseJourneyLegStopDownload]?
   
@@ -8,6 +10,8 @@ public struct LegStopProperties: Decodable {
   public var WheelchairAccess: BooleanEnum?
   
   public var AREA_NIVEAU_DIVA: String?
+  
+  public var AREA_NIVEAU_GIS: String?
   
   public var occupancy: String?
   

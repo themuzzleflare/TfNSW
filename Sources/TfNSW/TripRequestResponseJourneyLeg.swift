@@ -7,6 +7,9 @@ public struct TripRequestResponseJourneyLeg: Decodable {
   /// The approximate amount of time in seconds required to complete this journey leg.
   public var duration: Int?
   
+  /// The approximate distance in metres travelled to complete this journey leg.
+  public var distance: Int?
+  
   /// This indicates whether or not real-time data has been used to calculate the departure/arrival timestamps.
   public var isRealtimeControlled: Bool?
   
@@ -23,6 +26,9 @@ public struct TripRequestResponseJourneyLeg: Decodable {
   
   /// This is a list of all stops that are made for this leg. It is sorted in order of its stopping sequence. If the leg is a walking leg between two stops, then this will contain these two stops in order.
   public var stopSequence: [TripRequestResponseJourneyLegStop]?
+  
+  /// If the leg corresponds to a walking leg, this element contains walking directions.
+  public var footPathInfo: [TripRequestResponseJourneyLegStopFootpathInfo]?
   
   /// Contains a number of service alert messages relating to this journey leg. Information returned here is also available using the `add_info` API endpoint.
   public var infos: [TripRequestResponseJourneyLegStopInfo]?
