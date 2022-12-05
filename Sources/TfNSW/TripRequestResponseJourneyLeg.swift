@@ -133,27 +133,28 @@ extension Array where Element == TripRequestResponseJourneyLeg {
     }
   }
   
-  /// The value of the `fromNameTextNode` displayed on a `JourneyCellNode`.
   public var fromName: String? {
     return first?.origin?.shortNamePlatform
   }
   
-  /// The value of the `toNameTextNode` displayed on a `JourneyCellNode`.
   public var toName: String? {
     return last?.destination?.shortName
   }
   
-  /// The value of the `fromTimeTextNode` displayed on a `JourneyCellNode`.
+  public var tripName: String? {
+    guard let from = first?.origin?.shortName,
+          let to = last?.destination?.shortName else { return nil }
+    return "\(from) to \(to)"
+  }
+  
   public var fromTime: String? {
     return first?.origin?.departureTimeText
   }
   
-  /// The value of the `toTimeTextNode` displayed on a `JourneyCellNode`.
   public var toTime: String? {
     return last?.destination?.arrivalTimeText
   }
   
-  /// The value of the `relativeTimeTextNode` displayed on a `JourneyCellNode`.
   public var relativeDepartureTime: String? {
     return first?.relativeDepartureTime
   }
@@ -163,7 +164,6 @@ extension Array where Element == TripRequestResponseJourneyLeg {
     return first?.origin?.departureTimeInPast
   }
   
-  /// The value of the `transportationNamesTextNode` displayed on a `JourneyCellNode`.
   public var transportationNames: String? {
     return compactMap { $0.transportationName }.joined(separator: ",")
   }
@@ -173,7 +173,6 @@ extension Array where Element == TripRequestResponseJourneyLeg {
     return first?.productClass
   }
   
-  /// The background colour of the `relativeTimeDisplayNode` displayed on a `JourneyCellNode`.
   public var colour: UIColor? {
     return first?.colour
   }

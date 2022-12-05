@@ -89,6 +89,10 @@ extension TripRequestResponseJourneyLegStop {
     }
   }
   
+  public var platformName: String? {
+    return disassembledName?.split(separator: ", ").dropFirst(1).joined()
+  }
+  
   /// If available, `departureTimeEstimated`. Otherwise, `departureTimePlanned`.
   public var departureTime: String? {
     return departureTimeEstimated ?? departureTimePlanned
