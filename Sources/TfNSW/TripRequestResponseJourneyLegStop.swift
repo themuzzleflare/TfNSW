@@ -164,14 +164,48 @@ extension TripRequestResponseJourneyLegStop {
     return departureTimeDate?.isInPast
   }
   
-  public var arrivalTimeDelay: TimeInterval? {
-    guard let arrivalTimePlannedDate else { return nil }
-    return arrivalTimeEstimatedDate?.timeIntervalSince(arrivalTimePlannedDate)
+  public var arrivalTimeDelay: Int? {
+    guard let arrivalTimePlannedDate,
+          let interval = arrivalTimeEstimatedDate?.timeIntervalSince(arrivalTimePlannedDate) else { return nil }
+    return Int(interval)
   }
   
-  public var departureTimeDelay: TimeInterval? {
-    guard let departureTimePlannedDate else { return nil }
-    return departureTimeEstimatedDate?.timeIntervalSince(departureTimePlannedDate)
+  public var departureTimeDelay: Int? {
+    guard let departureTimePlannedDate,
+          let interval = departureTimeEstimatedDate?.timeIntervalSince(departureTimePlannedDate) else { return nil }
+    return Int(interval)
+  }
+  
+  public var arrivalTimeDelayText: String? {
+    guard let arrivalTimeDelay, arrivalTimeDelay >= 60 || arrivalTimeDelay <= -60 else { return nil }
+    var arrTimeDelay = arrivalTimeDelay
+    
+    if arrivalTimeDelay.signum() == -1 {
+      arrTimeDelay.negate()
+    }
+    
+    let text = arrTimeDelay.seconds.timeInterval.toIntervalString {
+      $0.unitsStyle = .abbreviated
+      $0.allowedUnits = .minute
+    }
+    
+    return "\(text) \(arrivalTimeDelay.signum() == -1 ? "early" : "late")"
+  }
+  
+  public var departureTimeDelayText: String? {
+    guard let departureTimeDelay, departureTimeDelay >= 60 || departureTimeDelay <= -60 else { return nil }
+    var depTimeDelay = departureTimeDelay
+    
+    if departureTimeDelay.signum() == -1 {
+      depTimeDelay.negate()
+    }
+    
+    let text = depTimeDelay.seconds.timeInterval.toIntervalString {
+      $0.unitsStyle = .abbreviated
+      $0.allowedUnits = .minute
+    }
+    
+    return "\(text) \(departureTimeDelay.signum() == -1 ? "early" : "late")"
   }
   
   /// The `CLLocation` of the stop, based on the latitude and longitude values in `coord`.

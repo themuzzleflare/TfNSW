@@ -51,7 +51,7 @@ extension TripRequestResponseJourneyLeg {
     let duration = duration ?? 0
     return duration.seconds.timeInterval.toIntervalString {
       $0.unitsStyle = .abbreviated
-      $0.allowedUnits = [.hour, .minute, .second]
+      $0.allowedUnits = [.hour, .minute]
     }
   }
   
@@ -97,7 +97,7 @@ extension TripRequestResponseJourneyLeg {
     guard let relativeWaitTime = relativeWaitTime(for: leg) else { return nil }
     let string = relativeWaitTime.seconds.timeInterval.toIntervalString {
       $0.unitsStyle = .abbreviated
-      $0.allowedUnits = [.hour, .minute, .second]
+      $0.allowedUnits = [.hour, .minute]
     }
     return "\(string) wait"
   }
@@ -135,7 +135,7 @@ extension Array where Element == TripRequestResponseJourneyLeg {
   public var totalDurationText: String {
     return totalDuration.seconds.timeInterval.toIntervalString {
       $0.unitsStyle = .abbreviated
-      $0.allowedUnits = [.hour, .minute, .second]
+      $0.allowedUnits = [.hour, .minute]
     }
   }
   

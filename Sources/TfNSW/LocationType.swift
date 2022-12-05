@@ -25,3 +25,26 @@ public enum LocationType: String, Decodable {
   /// Unknown.
   case unknown
 }
+
+extension LocationType: CustomStringConvertible {
+  public var description: String {
+    switch self {
+    case .pointOfInterest:
+      return "Point of Interest"
+    case .singlehouse:
+      return "Singlehouse"
+    case .stop:
+      return "Stop"
+    case .platform:
+      return "Platform"
+    case .street:
+      return "Street"
+    case .locality:
+      return "Locality"
+    case .suburb:
+      return "Suburb"
+    case .unknown:
+      return "Unknown"
+    }
+  }
+}
