@@ -1,6 +1,6 @@
 Pod::Spec.new do |spec|
   spec.name = 'TfNSW'
-  spec.version = '51.5.0'
+  spec.version = '51.6.0'
   spec.author = { 'Paul Tavitian' => 'paul@tavitian.cloud' }
   spec.social_media_url = 'https://twitter.com/PTavitian1'
   spec.license = { :type => 'MIT', :file => 'LICENSE' }
