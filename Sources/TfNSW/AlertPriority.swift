@@ -17,7 +17,7 @@ public enum AlertPriority: String, Decodable {
   case veryHigh
 }
 
-extension AlertPriority {
+extension AlertPriority: CustomStringConvertible {
   /// The description of the alert priority.
   public var description: String {
     switch self {

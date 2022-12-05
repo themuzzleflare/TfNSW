@@ -47,9 +47,12 @@ public struct TripRequestResponseJourneyLeg: Decodable {
 }
 
 extension TripRequestResponseJourneyLeg {
-  /// The value of the `durationTextNode` displayed on a `LegCellNode`.
   public var durationText: String {
-    return duration?.intervalString ?? ""
+    let duration = duration ?? 0
+    return duration.seconds.timeInterval.toIntervalString {
+      $0.unitsStyle = .abbreviated
+      $0.allowedUnits = [.hour, .minute, .second]
+    }
   }
   
   /// Whether or not both the vehicle and the stop are wheelchair-accessible.
@@ -57,22 +60,18 @@ extension TripRequestResponseJourneyLeg {
     return properties?.PlanLowFloorVehicle == .oneValue && properties?.PlanWheelChairAccess == .oneValue ? true : false
   }
   
-  /// The value of the `fromNameTextNode` displayed on a `LegCellNode`.
   public var fromName: String? {
     return origin?.shortNamePlatform
   }
   
-  /// The value of the `toNameTextNode` displayed on a `LegCellNode`.
   public var toName: String? {
     return destination?.shortNamePlatform
   }
   
-  /// The value of the `fromTimeTextNode` displayed on a `LegCellNode`.
   public var fromTime: String? {
     return origin?.departureTimeText
   }
   
-  /// The value of the `toTimeTextNode` displayed on a `LegCellNode`.
   public var toTime: String? {
     return destination?.arrivalTimeText
   }
@@ -83,11 +82,18 @@ extension TripRequestResponseJourneyLeg {
   }
   
   /// The relative wait time between the arrival of the previous leg and the departure of the current leg.
-  public func relativeWaitTime(for leg: TripRequestResponseJourneyLeg) -> String? {
-    let previousLegArrivalTime = leg.destination?.arrivalTime?.toDate(region: .current)
-    let currentLegDepartureTime = origin?.departureTime?.toDate(region: .current)
-    let difference = currentLegDepartureTime?.difference(in: .second, from: previousLegArrivalTime!)
-    return "\(difference?.intervalString ?? "") wait"
+  public func relativeWaitTime(for leg: TripRequestResponseJourneyLeg) -> Int? {
+    guard let previousLegArrivalTime = leg.destination?.arrivalTimeDate else { return nil }
+    return origin?.departureTimeDate?.difference(in: .second, from: previousLegArrivalTime)
+  }
+  
+  public func relativeWaitTimeText(for leg: TripRequestResponseJourneyLeg) -> String? {
+    guard let relativeWaitTime = relativeWaitTime(for: leg) else { return nil }
+    let string = relativeWaitTime.seconds.timeInterval.toIntervalString {
+      $0.unitsStyle = .abbreviated
+      $0.allowedUnits = [.hour, .minute, .second]
+    }
+    return "\(string) wait"
   }
   
   /// Whether or not the departure date and time of the leg's origin is in the past.
@@ -95,7 +101,6 @@ extension TripRequestResponseJourneyLeg {
     return origin?.departureTimeInPast
   }
   
-  /// The value of the `transportationNameTextNode` displayed on a `LegCellNode`.
   public var transportationName: String? {
     return transportation?.disassembledName ?? transportation?.product?.class?.description
   }
@@ -105,8 +110,71 @@ extension TripRequestResponseJourneyLeg {
     return transportation?.product?.class
   }
   
-  /// The background colour of the `relativeTimeDisplayNode` displayed on a `LegCellNode`.
+  /// The `IconID` of the leg's transportation.
+  public var iconId: IconID? {
+    return transportation?.product?.iconId
+  }
+  
   public var colour: UIColor? {
     return departueTimeInPast ?? false ? productClass?.colour.withAlphaComponent(0.500) : productClass?.colour
+  }
+}
+
+extension Array where Element == TripRequestResponseJourneyLeg {
+  public var totalDuration: Int {
+    let durationArray = self.compactMap { $0.duration }
+    return durationArray.reduce(0, +)
+  }
+  
+  public var totalDurationText: String {
+    return totalDuration.seconds.timeInterval.toIntervalString {
+      $0.unitsStyle = .abbreviated
+      $0.allowedUnits = [.hour, .minute, .second]
+    }
+  }
+  
+  /// The value of the `fromNameTextNode` displayed on a `JourneyCellNode`.
+  public var fromName: String? {
+    return first?.origin?.shortNamePlatform
+  }
+  
+  /// The value of the `toNameTextNode` displayed on a `JourneyCellNode`.
+  public var toName: String? {
+    return last?.destination?.shortName
+  }
+  
+  /// The value of the `fromTimeTextNode` displayed on a `JourneyCellNode`.
+  public var fromTime: String? {
+    return first?.origin?.departureTimeText
+  }
+  
+  /// The value of the `toTimeTextNode` displayed on a `JourneyCellNode`.
+  public var toTime: String? {
+    return last?.destination?.arrivalTimeText
+  }
+  
+  /// The value of the `relativeTimeTextNode` displayed on a `JourneyCellNode`.
+  public var relativeDepartureTime: String? {
+    return first?.relativeDepartureTime
+  }
+  
+  /// Whether or not the departure date and time of the first leg's origin is in the past.
+  public var departueTimeInPast: Bool? {
+    return first?.origin?.departureTimeInPast
+  }
+  
+  /// The value of the `transportationNamesTextNode` displayed on a `JourneyCellNode`.
+  public var transportationNames: String? {
+    return compactMap { $0.transportationName }.joined(separator: ",")
+  }
+  
+  /// The `ProductClass` of the first leg's transportation.
+  public var initialProductClass: ProductClass? {
+    return first?.productClass
+  }
+  
+  /// The background colour of the `relativeTimeDisplayNode` displayed on a `JourneyCellNode`.
+  public var colour: UIColor? {
+    return first?.colour
   }
 }

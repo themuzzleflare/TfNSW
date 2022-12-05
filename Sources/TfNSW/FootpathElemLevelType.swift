@@ -5,3 +5,16 @@ public enum FootpathElemLevelType: String, Decodable {
   case level = "LEVEL"
   case up = "UP"
 }
+
+extension FootpathElemLevelType: CustomStringConvertible {
+  public var description: String {
+    switch self {
+    case .down:
+      return "Down"
+    case .level:
+      return "Level"
+    case .up:
+      return "Up"
+    }
+  }
+}

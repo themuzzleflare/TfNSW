@@ -69,16 +69,24 @@ public struct TripRequestResponseJourneyLegStop: Decodable {
 }
 
 extension TripRequestResponseJourneyLegStop {
-  /// The `disassembledName` of the stop, with occurences of "Station" removed.
-  public var shortNamePlatform: String? {
-    let name = disassembledName ?? name
-    return name?.replacingOccurrences(of: " Station", with: "")
+  /// If available, `disassembledName`. Otherwise, `name`.
+  public var stopName: String? {
+    return disassembledName ?? name
   }
   
-  /// The `disassembledName` of the stop, with occurences of "Station" and "Platform" removed.
+  /// The `stopName` of the stop, with occurences of "Station" removed.
+  public var shortNamePlatform: String? {
+    return stopName?.replacingOccurrences(of: " Station", with: "")
+  }
+  
+  /// The `stopName` of the stop, with occurences of "Station" and "Platform" removed.
   public var shortName: String? {
-    let name = disassembledName ?? name
-    return name?.replacingOccurrences(of: " Station", with: "").split(separator: ",").dropLast().joined()
+    guard let shortNamePlatform else { return nil }
+    if shortNamePlatform.localizedStandardContains(", Platform") {
+      return shortNamePlatform.split(separator: ",").dropLast().joined()
+    } else {
+      return shortNamePlatform
+    }
   }
   
   /// If available, `departureTimeEstimated`. Otherwise, `departureTimePlanned`.
@@ -91,24 +99,74 @@ extension TripRequestResponseJourneyLegStop {
     return arrivalTimeEstimated ?? arrivalTimePlanned
   }
   
+  public var departureTimeEstimatedDate: DateInRegion? {
+    return departureTimeEstimated?.toDate(region: .current)
+  }
+  
+  public var arrivalTimeEstimatedDate: DateInRegion? {
+    return arrivalTimeEstimated?.toDate(region: .current)
+  }
+  
+  public var departureTimePlannedDate: DateInRegion? {
+    return departureTimePlanned?.toDate(region: .current)
+  }
+  
+  public var arrivalTimePlannedDate: DateInRegion? {
+    return arrivalTimePlanned?.toDate(region: .current)
+  }
+  
+  public var departureTimeDate: DateInRegion? {
+    return departureTime?.toDate(region: .current)
+  }
+  
+  public var arrivalTimeDate: DateInRegion? {
+    return arrivalTime?.toDate(region: .current)
+  }
+  
+  public var departureTimeEstimatedText: String? {
+    return departureTimeEstimatedDate?.toString(.time(.short))
+  }
+  
+  public var departureTimePlannedText: String? {
+    return departureTimePlannedDate?.toString(.time(.short))
+  }
+  
+  public var arrivalTimeEstimatedText: String? {
+    return arrivalTimeEstimatedDate?.toString(.time(.short))
+  }
+  
+  public var arrivalTimePlannedText: String? {
+    return arrivalTimePlannedDate?.toString(.time(.short))
+  }
+  
   public var departureTimeText: String? {
-    return departureTime?.toDate(region: .current)?.toString(.time(.short))
+    return departureTimeDate?.toString(.time(.short))
   }
   
   public var arrivalTimeText: String? {
-    return arrivalTime?.toDate(region: .current)?.toString(.time(.short))
+    return arrivalTimeDate?.toString(.time(.short))
   }
   
   public var relativeDepartureTime: String? {
-    return departureTime?.toDate(region: .current)?.toRelative(since: .init())
+    return departureTimeDate?.toRelative(since: .init())
   }
   
   public var relativeArrivalTime: String? {
-    return arrivalTime?.toDate(region: .current)?.toRelative(since: .init())
+    return arrivalTimeDate?.toRelative(since: .init())
   }
   
   public var departureTimeInPast: Bool? {
-    return departureTime?.toDate(region: .current)?.isInPast
+    return departureTimeDate?.isInPast
+  }
+  
+  public var arrivalTimeDelay: Int? {
+    guard let arrivalTimePlannedDate else { return nil }
+    return arrivalTimeEstimatedDate?.difference(in: .second, from: arrivalTimePlannedDate)
+  }
+  
+  public var departureTimeDelay: Int? {
+    guard let departureTimePlannedDate else { return nil }
+    return departureTimeEstimatedDate?.difference(in: .second, from: departureTimePlannedDate)
   }
   
   /// The `CLLocation` of the stop, based on the latitude and longitude values in `coord`.
