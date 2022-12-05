@@ -31,7 +31,6 @@ public struct TripRequestResponseJourneyLegPathDescriptionProperties: Decodable 
       self.outdoorType = [itype]
     }
     
-    self.outdoorType = try container.decodeIfPresent([String].self, forKey: .outdoorType)
     self.trackIlluminated = try container.decodeIfPresent(String.self, forKey: .trackIlluminated)
   }
 }
