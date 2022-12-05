@@ -68,6 +68,12 @@ extension TripRequestResponseJourneyLeg {
     return destination?.shortNamePlatform
   }
   
+  public var legName: String? {
+    guard let from = origin?.shortName,
+          let to = destination?.shortName else { return nil }
+    return "\(from) to \(to)"
+  }
+  
   public var fromTime: String? {
     return origin?.departureTimeText
   }
@@ -171,6 +177,11 @@ extension Array where Element == TripRequestResponseJourneyLeg {
   /// The `ProductClass` of the first leg's transportation.
   public var initialProductClass: ProductClass? {
     return first?.productClass
+  }
+  
+  /// The `IconID` of the first leg's transportation.
+  public var initialIconId: IconID? {
+    return first?.iconId
   }
   
   public var colour: UIColor? {

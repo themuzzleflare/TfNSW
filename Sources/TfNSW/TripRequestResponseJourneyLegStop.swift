@@ -90,7 +90,8 @@ extension TripRequestResponseJourneyLegStop {
   }
   
   public var platformName: String? {
-    return disassembledName?.split(separator: ", ").dropFirst(1).joined()
+    guard let disassembledName, disassembledName.localizedStandardContains(", Platform") else { return nil }
+    return disassembledName.split(separator: ", ").dropFirst(1).joined()
   }
   
   /// If available, `departureTimeEstimated`. Otherwise, `departureTimePlanned`.
@@ -163,14 +164,14 @@ extension TripRequestResponseJourneyLegStop {
     return departureTimeDate?.isInPast
   }
   
-  public var arrivalTimeDelay: Int? {
+  public var arrivalTimeDelay: TimeInterval? {
     guard let arrivalTimePlannedDate else { return nil }
-    return arrivalTimeEstimatedDate?.difference(in: .second, from: arrivalTimePlannedDate)
+    return arrivalTimeEstimatedDate?.timeIntervalSince(arrivalTimePlannedDate)
   }
   
-  public var departureTimeDelay: Int? {
+  public var departureTimeDelay: TimeInterval? {
     guard let departureTimePlannedDate else { return nil }
-    return departureTimeEstimatedDate?.difference(in: .second, from: departureTimePlannedDate)
+    return departureTimeEstimatedDate?.timeIntervalSince(departureTimePlannedDate)
   }
   
   /// The `CLLocation` of the stop, based on the latitude and longitude values in `coord`.

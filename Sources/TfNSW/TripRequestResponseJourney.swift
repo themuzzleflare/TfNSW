@@ -21,32 +21,26 @@ extension TripRequestResponseJourney {
     return legs?.totalDuration ?? 0
   }
   
-  /// The value of the `totalDurationTextNode` displayed on a `JourneyCellNode`.
   public var totalDurationText: String {
     return legs?.totalDurationText ?? ""
   }
   
-  /// The value of the `fromNameTextNode` displayed on a `JourneyCellNode`.
   public var fromName: String? {
     return legs?.fromName
   }
   
-  /// The value of the `toNameTextNode` displayed on a `JourneyCellNode`.
   public var toName: String? {
     return legs?.toName
   }
   
-  /// The value of the `fromTimeTextNode` displayed on a `JourneyCellNode`.
   public var fromTime: String? {
     return legs?.fromTime
   }
   
-  /// The value of the `toTimeTextNode` displayed on a `JourneyCellNode`.
   public var toTime: String? {
     return legs?.toTime
   }
   
-  /// The value of the `relativeTimeTextNode` displayed on a `JourneyCellNode`.
   public var relativeDepartureTime: String? {
     return legs?.relativeDepartureTime
   }
@@ -56,7 +50,6 @@ extension TripRequestResponseJourney {
     return legs?.departueTimeInPast
   }
   
-  /// The value of the `transportationNamesTextNode` displayed on a `JourneyCellNode`.
   public var transportationNames: String? {
     return legs?.transportationNames
   }
@@ -66,7 +59,6 @@ extension TripRequestResponseJourney {
     return legs?.initialProductClass
   }
   
-  /// The background colour of the `relativeTimeDisplayNode` displayed on a `JourneyCellNode`.
   public var colour: UIColor? {
     return legs?.colour
   }
