@@ -177,7 +177,7 @@ extension TripRequestResponseJourneyLegStop {
   }
   
   public var arrivalTimeDelayText: String? {
-    guard let arrivalTimeDelay, arrivalTimeDelay >= 60 || arrivalTimeDelay <= -60 else { return nil }
+    guard let arrivalTimeDelay, arrivalTimeDelay >= 1 || arrivalTimeDelay <= -1 else { return nil }
     var arrTimeDelay = arrivalTimeDelay
     
     if arrivalTimeDelay.signum() == -1 {
@@ -186,14 +186,14 @@ extension TripRequestResponseJourneyLegStop {
     
     let text = arrTimeDelay.seconds.timeInterval.toIntervalString {
       $0.unitsStyle = .abbreviated
-      $0.allowedUnits = .minute
+      $0.allowedUnits = [.second, .minute, .hour]
     }
     
     return "\(text) \(arrivalTimeDelay.signum() == -1 ? "early" : "late")"
   }
   
   public var departureTimeDelayText: String? {
-    guard let departureTimeDelay, departureTimeDelay >= 60 || departureTimeDelay <= -60 else { return nil }
+    guard let departureTimeDelay, departureTimeDelay >= 1 || departureTimeDelay <= -1 else { return nil }
     var depTimeDelay = departureTimeDelay
     
     if departureTimeDelay.signum() == -1 {
@@ -202,7 +202,7 @@ extension TripRequestResponseJourneyLegStop {
     
     let text = depTimeDelay.seconds.timeInterval.toIntervalString {
       $0.unitsStyle = .abbreviated
-      $0.allowedUnits = .minute
+      $0.allowedUnits = [.second, .minute, .hour]
     }
     
     return "\(text) \(departureTimeDelay.signum() == -1 ? "early" : "late")"
