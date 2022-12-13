@@ -11,12 +11,12 @@ public struct AdditionalInfoResponseTimestamps: Decodable {
 
 extension AdditionalInfoResponseTimestamps {
   /// The `Date` value of `creation`.
-  public var creationDate: Date? {
-    return creation?.toDate(region: .current)?.date
+  public var creationDate: DateInRegion? {
+    return creation?.toDate(region: .current)
   }
   
   /// The `Date` value of `lastModification`.
-  public var lastModificationDate: Date? {
-    return lastModification?.toDate(region: .current)?.date
+  public var lastModificationDate: DateInRegion? {
+    return lastModification?.toDate(region: .current)
   }
 }
