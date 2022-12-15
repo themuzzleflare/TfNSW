@@ -59,7 +59,12 @@ extension TripRequestResponseJourney {
     return legs?.initialProductClass
   }
   
-  public var colour: UIColor? {
-    return legs?.colour
+  /// The `IconID` of the first leg's transportation.
+  public var initialIconId: IconID? {
+    return legs?.initialIconId
+  }
+  
+  public var productColour: UIColor? {
+    return legs?.productColour
   }
 }

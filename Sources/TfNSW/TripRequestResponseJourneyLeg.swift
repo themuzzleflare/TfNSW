@@ -121,8 +121,8 @@ extension TripRequestResponseJourneyLeg {
     return transportation?.product?.iconId
   }
   
-  public var colour: UIColor? {
-    return departueTimeInPast ?? false ? productClass?.colour.withAlphaComponent(0.500) : productClass?.colour
+  public var productColour: UIColor? {
+    return departueTimeInPast ?? false ? productClass?.colour.withAlphaComponent(0.5) : productClass?.colour
   }
 }
 
@@ -184,7 +184,7 @@ extension Array where Element == TripRequestResponseJourneyLeg {
     return first?.iconId
   }
   
-  public var colour: UIColor? {
-    return first?.colour
+  public var productColour: UIColor? {
+    return first?.productColour
   }
 }

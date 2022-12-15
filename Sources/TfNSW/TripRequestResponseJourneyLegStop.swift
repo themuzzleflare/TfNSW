@@ -76,13 +76,13 @@ extension TripRequestResponseJourneyLegStop {
   
   /// The `stopName` of the stop, with occurences of "Station" removed.
   public var shortNamePlatform: String? {
-    return stopName?.replacingOccurrences(of: " Station", with: "")
+    return stopName?.replacing(" Station", with: "")
   }
   
   /// The `stopName` of the stop, with occurences of "Station" and "Platform" removed.
   public var shortName: String? {
     guard let shortNamePlatform else { return nil }
-    if shortNamePlatform.localizedStandardContains(", Platform") {
+    if shortNamePlatform.contains(", Platform") {
       return shortNamePlatform.split(separator: ",").dropLast().joined()
     } else {
       return shortNamePlatform
@@ -90,7 +90,7 @@ extension TripRequestResponseJourneyLegStop {
   }
   
   public var platformName: String? {
-    guard let disassembledName, disassembledName.localizedStandardContains(", Platform") else { return nil }
+    guard let disassembledName, disassembledName.contains(", Platform") else { return nil }
     return disassembledName.split(separator: ", ").dropFirst(1).joined()
   }
   
@@ -210,10 +210,7 @@ extension TripRequestResponseJourneyLegStop {
   
   /// The `CLLocation` of the stop, based on the latitude and longitude values in `coord`.
   public var location: CLLocation? {
-    if let coord {
-      return CLLocation(latitude: coord[0], longitude: coord[1])
-    } else {
-      return nil
-    }
+    guard let coord else { return nil }
+    return CLLocation(latitude: coord[0], longitude: coord[1])
   }
 }
