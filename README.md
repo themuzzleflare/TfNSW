@@ -1,3 +1,3 @@
 # TfNSW
 
-TfNSW Swift library
+Swift library for TfNSW Trip Planner API.

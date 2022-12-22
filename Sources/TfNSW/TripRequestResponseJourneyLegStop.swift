@@ -210,7 +210,7 @@ extension TripRequestResponseJourneyLegStop {
   
   /// The `CLLocation` of the stop, based on the latitude and longitude values in `coord`.
   public var location: CLLocation? {
-    guard let coord else { return nil }
-    return CLLocation(latitude: coord[0], longitude: coord[1])
+    guard let latitude = coord?.first, let longitude = coord?.last else { return nil }
+    return CLLocation(latitude: latitude, longitude: longitude)
   }
 }

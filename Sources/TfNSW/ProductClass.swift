@@ -20,6 +20,8 @@ public enum ProductClass: Int, Decodable {
   /// Ferry.
   case ferry = 9
   
+  case onDemand = 10
+  
   /// School Bus.
   case schoolBus = 11
   
@@ -82,6 +84,8 @@ extension ProductClass {
       return "Taxi"
     case .car:
       return "Car"
+    case .onDemand:
+      return "On-Demand"
     }
   }
   
