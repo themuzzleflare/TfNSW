@@ -13,6 +13,8 @@ public struct LegStopProperties: Decodable {
   
   public var AREA_NIVEAU_GIS: String?
   
+  public var pbyb: String?
+  
   public var occupancy: String?
   
   public var realtimeStatus: [String]?
@@ -24,6 +26,8 @@ public struct LegStopProperties: Decodable {
   public var TravelInCarsTo: String?
   
   public var TravelInCarsMessage: String?
+  
+  public var areaGid: String?
   
   public var area: String?
   
