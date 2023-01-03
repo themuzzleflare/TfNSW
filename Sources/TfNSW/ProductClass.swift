@@ -50,7 +50,7 @@ public enum ProductClass: Int, Decodable {
   case car = 106
 }
 
-extension ProductClass {
+extension ProductClass: CustomStringConvertible {
   /// The custom description of the `ProductClass`.
   public var description: String {
     switch self {
@@ -88,7 +88,9 @@ extension ProductClass {
       return "On-Demand"
     }
   }
-  
+}
+
+extension ProductClass {
   /// The colour associated with the `ProductClass`.
   public var colour: UIColor {
     switch self {

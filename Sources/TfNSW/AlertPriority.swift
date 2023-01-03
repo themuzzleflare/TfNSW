@@ -34,3 +34,20 @@ extension AlertPriority: CustomStringConvertible {
     }
   }
 }
+
+extension AlertPriority {
+  public var intValue: Int {
+    switch self {
+    case .veryLow:
+      return 5
+    case .low:
+      return 4
+    case .normal:
+      return 3
+    case .high:
+      return 2
+    case .veryHigh:
+      return 1
+    }
+  }
+}
