@@ -1,11 +1,11 @@
 import Foundation
 
 public struct LegStopInfoProperties: Decodable {
-  public var publisher: String?
+  public let publisher: String?
   
-  public var infoType: String?
+  public let infoType: String?
   
-  public var appliesTo: String?
+  public let appliesTo: String?
   
-  public var stopIDglobalID: String?
+  public let stopIDglobalID: String?
 }

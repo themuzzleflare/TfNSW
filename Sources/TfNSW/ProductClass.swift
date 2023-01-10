@@ -90,9 +90,9 @@ extension ProductClass: CustomStringConvertible {
   }
 }
 
-extension ProductClass {
+public extension ProductClass {
   /// The colour associated with the `ProductClass`.
-  public var colour: UIColor {
+  var colour: UIColor {
     switch self {
     case .train:
       return .train

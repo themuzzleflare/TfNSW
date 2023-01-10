@@ -3,10 +3,10 @@ import CoreLocation
 import SwiftDate
 
 public struct TripRequestResponseJourneyLegStop: Decodable {
-  public var isGlobalId: Bool?
+  public let isGlobalId: Bool?
   
   /// This is a unique ID for the returned location. Certain types of ID can be used for subsequent searches performed with `stop_finder`, or can be used as the origin or destination in an `trip` request. The format of a location ID differs greatly, depending on the type of location it is.
-  public var id: String?
+  public let id: String?
   
   /// This is the long version of the location name, which may include the suburb or other information.
   @StopName public var name: String?
@@ -15,36 +15,36 @@ public struct TripRequestResponseJourneyLegStop: Decodable {
   @StopName public var disassembledName: String?
   
   /// This is the type of location being returned. It will typically represent a specific stop or platform. = ['poi', 'singlehouse', 'stop', 'platform', 'street', 'locality', 'suburb', 'unknown'].
-  public var type: LocationType?
+  public let type: LocationType?
   
   /// Contains exactly two values: the first value is the latitude, the second value is the longitude.
-  public var coord: [CLLocationDegrees]?
+  public let coord: [CLLocationDegrees]?
   
-  public var niveau: Int?
+  public let niveau: Int?
   
   /// If available, contains information about this location's parent location. For example, if the stop has a type of `platform`, then this field may contain information about the station in which the platform is located.
-  public var parent: ParentLocation?
+  public let parent: ParentLocation?
   
-  public var productClasses: [ProductClass]?
+  public let productClasses: [ProductClass]?
   
   /// A timestamp in `YYYY-MM-DDTHH:MM:SSZ` format that indicates the planned departure time. This is the original scheduled time.
-  public var departureTimePlanned: String?
+  public let departureTimePlanned: String?
   
   /// A timestamp in `YYYY-MM-DDTHH:MM:SSZ` format that indicates the estimated departure time. If real-time information is available then this timestamp is the real-time estimate, otherwise it is the same as the value in `departureTimePlanned`.
-  public var departureTimeEstimated: String?
+  public let departureTimeEstimated: String?
   
   /// A timestamp in `YYYY-MM-DDTHH:MM:SSZ` format that indicates the planned arrival time. This is the original scheduled time.
-  public var arrivalTimePlanned: String?
+  public let arrivalTimePlanned: String?
   
   /// A timestamp in `YYYY-MM-DDTHH:MM:SSZ` format that indicates the estimated arrival time. If real-time information is available then this timestamp is the real-time estimate, otherwise it is the same as the value in `arrivalTimePlanned`.
-  public var arrivalTimeEstimated: String?
+  public let arrivalTimeEstimated: String?
   
   /// Contains additional information about this stop, such as wheelchair accessibility information.
-  public var properties: LegStopProperties?
+  public let properties: LegStopProperties?
   
-  public var isCancelled: Bool?
+  public let isCancelled: Bool?
   
-  public enum CodingKeys: String, CodingKey {
+  enum CodingKeys: String, CodingKey {
     case isGlobalId, id, name, disassembledName, type, coord, niveau, parent, productClasses, departureTimePlanned, departureTimeEstimated, arrivalTimePlanned, arrivalTimeEstimated, properties, isCancelled
   }
   
@@ -68,19 +68,19 @@ public struct TripRequestResponseJourneyLegStop: Decodable {
   }
 }
 
-extension TripRequestResponseJourneyLegStop {
+public extension TripRequestResponseJourneyLegStop {
   /// If available, `disassembledName`. Otherwise, `name`.
-  public var stopName: String? {
+  var stopName: String? {
     return disassembledName ?? name
   }
   
   /// The `stopName` of the stop, with occurences of "Station" removed.
-  public var shortNamePlatform: String? {
+  var shortNamePlatform: String? {
     return stopName?.replacing(" Station", with: "")
   }
   
   /// The `stopName` of the stop, with occurences of "Station" and "Platform" removed.
-  public var shortName: String? {
+  var shortName: String? {
     guard let shortNamePlatform else { return nil }
     if shortNamePlatform.contains(", Platform") {
       return shortNamePlatform.split(separator: ",").dropLast().joined()
@@ -89,94 +89,94 @@ extension TripRequestResponseJourneyLegStop {
     }
   }
   
-  public var platformName: String? {
+  var platformName: String? {
     guard let disassembledName, disassembledName.contains(", Platform") else { return nil }
     return disassembledName.split(separator: ", ").dropFirst(1).joined()
   }
   
   /// If available, `departureTimeEstimated`. Otherwise, `departureTimePlanned`.
-  public var departureTime: String? {
+  var departureTime: String? {
     return departureTimeEstimated ?? departureTimePlanned
   }
   
   /// If available, `arrivalTimeEstimated`. Otherwise, `arrivalTimePlanned`.
-  public var arrivalTime: String? {
+  var arrivalTime: String? {
     return arrivalTimeEstimated ?? arrivalTimePlanned
   }
   
-  public var departureTimeEstimatedDate: DateInRegion? {
+  var departureTimeEstimatedDate: DateInRegion? {
     return departureTimeEstimated?.toDate(region: .current)
   }
   
-  public var arrivalTimeEstimatedDate: DateInRegion? {
+  var arrivalTimeEstimatedDate: DateInRegion? {
     return arrivalTimeEstimated?.toDate(region: .current)
   }
   
-  public var departureTimePlannedDate: DateInRegion? {
+  var departureTimePlannedDate: DateInRegion? {
     return departureTimePlanned?.toDate(region: .current)
   }
   
-  public var arrivalTimePlannedDate: DateInRegion? {
+  var arrivalTimePlannedDate: DateInRegion? {
     return arrivalTimePlanned?.toDate(region: .current)
   }
   
-  public var departureTimeDate: DateInRegion? {
+  var departureTimeDate: DateInRegion? {
     return departureTime?.toDate(region: .current)
   }
   
-  public var arrivalTimeDate: DateInRegion? {
+  var arrivalTimeDate: DateInRegion? {
     return arrivalTime?.toDate(region: .current)
   }
   
-  public var departureTimeEstimatedText: String? {
+  var departureTimeEstimatedText: String? {
     return departureTimeEstimatedDate?.toString(.time(.short))
   }
   
-  public var departureTimePlannedText: String? {
+  var departureTimePlannedText: String? {
     return departureTimePlannedDate?.toString(.time(.short))
   }
   
-  public var arrivalTimeEstimatedText: String? {
+  var arrivalTimeEstimatedText: String? {
     return arrivalTimeEstimatedDate?.toString(.time(.short))
   }
   
-  public var arrivalTimePlannedText: String? {
+  var arrivalTimePlannedText: String? {
     return arrivalTimePlannedDate?.toString(.time(.short))
   }
   
-  public var departureTimeText: String? {
+  var departureTimeText: String? {
     return departureTimeDate?.toString(.time(.short))
   }
   
-  public var arrivalTimeText: String? {
+  var arrivalTimeText: String? {
     return arrivalTimeDate?.toString(.time(.short))
   }
   
-  public var relativeDepartureTime: String? {
+  var relativeDepartureTime: String? {
     return departureTimeDate?.toRelative(since: .init())
   }
   
-  public var relativeArrivalTime: String? {
+  var relativeArrivalTime: String? {
     return arrivalTimeDate?.toRelative(since: .init())
   }
   
-  public var departureTimeInPast: Bool? {
+  var departureTimeInPast: Bool? {
     return departureTimeDate?.isInPast
   }
   
-  public var arrivalTimeDelay: Int? {
+  var arrivalTimeDelay: Int? {
     guard let arrivalTimePlannedDate,
           let interval = arrivalTimeEstimatedDate?.timeIntervalSince(arrivalTimePlannedDate) else { return nil }
     return Int(interval)
   }
   
-  public var departureTimeDelay: Int? {
+  var departureTimeDelay: Int? {
     guard let departureTimePlannedDate,
           let interval = departureTimeEstimatedDate?.timeIntervalSince(departureTimePlannedDate) else { return nil }
     return Int(interval)
   }
   
-  public var arrivalTimeDelayText: String? {
+  var arrivalTimeDelayText: String? {
     guard let arrivalTimeDelay, arrivalTimeDelay >= 1 || arrivalTimeDelay <= -1 else { return nil }
     var arrTimeDelay = arrivalTimeDelay
     
@@ -192,7 +192,7 @@ extension TripRequestResponseJourneyLegStop {
     return "\(text) \(arrivalTimeDelay.signum() == -1 ? "early" : "late")"
   }
   
-  public var departureTimeDelayText: String? {
+  var departureTimeDelayText: String? {
     guard let departureTimeDelay, departureTimeDelay >= 1 || departureTimeDelay <= -1 else { return nil }
     var depTimeDelay = departureTimeDelay
     
@@ -209,7 +209,7 @@ extension TripRequestResponseJourneyLegStop {
   }
   
   /// The `CLLocation` of the stop, based on the latitude and longitude values in `coord`.
-  public var location: CLLocation? {
+  var location: CLLocation? {
     guard let latitude = coord?.first, let longitude = coord?.last else { return nil }
     return CLLocation(latitude: latitude, longitude: longitude)
   }

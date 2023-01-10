@@ -1,5 +1,5 @@
 import Foundation
 
 public struct TripRequestResponseJourneyDaysOfService: Decodable {
-  public var rvb: String?
+  public let rvb: String?
 }

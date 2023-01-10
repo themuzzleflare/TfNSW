@@ -1,35 +1,35 @@
 import Foundation
 
 public struct LegStopProperties: Decodable {
-  public var stopId: String?
+  public let stopId: String?
   
   /// Describes a list of downloadable files relevant to this location.
-  public var downloads: [TripRequestResponseJourneyLegStopDownload]?
+  public let downloads: [TripRequestResponseJourneyLegStopDownload]?
   
   /// Indicates if there is wheelchair access available at this stop. = ['true', 'false'].
-  public var WheelchairAccess: BooleanEnum?
+  public let WheelchairAccess: BooleanEnum?
   
-  public var AREA_NIVEAU_DIVA: String?
+  public let AREA_NIVEAU_DIVA: String?
   
-  public var AREA_NIVEAU_GIS: String?
+  public let AREA_NIVEAU_GIS: String?
   
-  public var pbyb: String?
+  public let pbyb: String?
   
-  public var occupancy: String?
+  public let occupancy: String?
   
-  public var realtimeStatus: [String]?
+  public let realtimeStatus: [String]?
   
-  public var NumberOfCars: String?
+  public let NumberOfCars: String?
   
-  public var TravelInCarsFrom: String?
+  public let TravelInCarsFrom: String?
   
-  public var TravelInCarsTo: String?
+  public let TravelInCarsTo: String?
   
-  public var TravelInCarsMessage: String?
+  public let TravelInCarsMessage: String?
   
-  public var areaGid: String?
+  public let areaGid: String?
   
-  public var area: String?
+  public let area: String?
   
-  public var platform: String?
+  public let platform: String?
 }

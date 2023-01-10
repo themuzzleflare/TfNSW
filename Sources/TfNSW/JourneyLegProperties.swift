@@ -1,11 +1,15 @@
 import Foundation
 
 public struct JourneyLegProperties: Decodable {
-  public var vehicleAccess: [String]?
+  public let vehicleAccess: [String]?
+  
+  public let lineType: [String]?
+  
+  public let DIFFERENT_FARES: BooleanEnum?
   
   /// This indicates whether or not the vehicle is wheelchair accessible.
-  public var PlanLowFloorVehicle: BooleanEnum?
+  public let PlanLowFloorVehicle: BooleanEnum?
   
   /// This indicates whether or not the stop is wheelchair accessible.
-  public var PlanWheelChairAccess: BooleanEnum?
+  public let PlanWheelChairAccess: BooleanEnum?
 }

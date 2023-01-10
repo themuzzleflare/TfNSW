@@ -1,18 +1,20 @@
 import Foundation
 
 public struct RouteProperties: Decodable {
-  public var isTTB: Bool?
+  public let isTTB: Bool?
   
   /// This is an ID for this journey option.
-  public var tripCode: Int?
+  public let tripCode: Int?
   
-  public var timetablePeriod: String?
+  public let timetablePeriod: String?
   
-  public var lineDisplay: String?
+  public let specialFares: String?
   
-  public var AVMSTripID: String?
+  public let lineDisplay: String?
   
-  public var RealtimeTripId: String?
+  public let AVMSTripID: String?
   
-  public var FrequencyLine: String?
+  public let RealtimeTripId: String?
+  
+  public let FrequencyLine: String?
 }

@@ -2,29 +2,29 @@ import Foundation
 
 public struct TripTransportation: Decodable {
   /// This is an ID that uniquely identifies this route.
-  public var id: String?
+  public let id: String?
   
   /// This contains the full name of the route.
-  public var name: String?
+  public let name: String?
   
   /// Contains a very short name for the route.
-  public var disassembledName: String?
+  public let disassembledName: String?
   
   /// Contains a short name for the route.
-  public var number: String?
+  public let number: String?
   
   /// Contains a description of this route.
-  public var description: String?
+  public let description: String?
   
   /// This element contains additional properties about the route.
-  public var product: RouteProduct?
+  public let product: RouteProduct?
   
   /// This element describes the operator of this route.
-  public var `operator`: RouteOperator?
+  public let `operator`: RouteOperator?
   
   /// This element contains information about where vehicles on this route terminate.
-  public var destination: RouteDestination?
+  public let destination: RouteDestination?
   
   /// Contains additional properties about this route.
-  public var properties: RouteProperties?
+  public let properties: RouteProperties?
 }

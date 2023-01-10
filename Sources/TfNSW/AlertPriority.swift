@@ -35,8 +35,8 @@ extension AlertPriority: CustomStringConvertible {
   }
 }
 
-extension AlertPriority {
-  public var intValue: Int {
+public extension AlertPriority {
+  var intValue: Int {
     switch self {
     case .veryLow:
       return 5

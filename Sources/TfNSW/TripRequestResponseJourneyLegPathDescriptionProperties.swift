@@ -1,15 +1,15 @@
 import Foundation
 
 public struct TripRequestResponseJourneyLegPathDescriptionProperties: Decodable {
-  public var floorLevelChangeDirection: String?
+  public let floorLevelChangeDirection: String?
   
-  public var floorLevelDifference: String?
+  public let floorLevelDifference: String?
   
-  public var indoorType: String?
+  public let indoorType: String?
   
-  public var outdoorType: [String]?
+  public let outdoorType: [String]?
   
-  public var trackIlluminated: String?
+  public let trackIlluminated: String?
   
   enum CodingKeys: String, CodingKey {
     case floorLevelChangeDirection = "FLOOR_LEVEL_CHANGE_DIRECTION"
@@ -25,10 +25,11 @@ public struct TripRequestResponseJourneyLegPathDescriptionProperties: Decodable 
     self.floorLevelDifference = try container.decodeIfPresent(String.self, forKey: .floorLevelDifference)
     self.indoorType = try container.decodeIfPresent(String.self, forKey: .indoorType)
     
-    if let itype = try? container.decodeIfPresent([String].self, forKey: .outdoorType) {
-      self.outdoorType = itype
-    } else if let itype = try? container.decodeIfPresent(String.self, forKey: .outdoorType) {
-      self.outdoorType = [itype]
+    do {
+      self.outdoorType = try container.decodeIfPresent([String].self, forKey: .outdoorType)
+    } catch {
+      guard let outdoorType = try container.decodeIfPresent(String.self, forKey: .outdoorType) else { throw error }
+      self.outdoorType = [outdoorType]
     }
     
     self.trackIlluminated = try container.decodeIfPresent(String.self, forKey: .trackIlluminated)

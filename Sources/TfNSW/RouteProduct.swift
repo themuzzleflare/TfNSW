@@ -1,14 +1,14 @@
 import Foundation
 
 public struct RouteProduct: Decodable {
-  public var id: Int?
+  public let id: Int?
   
   /// This field indicates the type of the route, using the same values as elsewhere in this API.
-  public var `class`: ProductClass?
+  public let `class`: ProductClass?
   
   /// Name of the product.
-  public var name: String?
+  public let name: String?
   
   /// This field is used by to determine which icon to use when displaying this affected route. It will typically match up with the `class` value.
-  public var iconId: IconID?
+  public let iconId: IconID?
 }

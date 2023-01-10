@@ -14,9 +14,9 @@ public enum BooleanEnum: String, Decodable {
   case zeroValue = "0"
 }
 
-extension BooleanEnum {
+public extension BooleanEnum {
   /// The  `Bool` value of  `BooleanEnum`.
-  public var boolValue: Bool {
+  var boolValue: Bool {
     switch self {
     case .trueValue, .oneValue:
       return true

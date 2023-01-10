@@ -70,9 +70,9 @@ public enum IconID: Int, Decodable {
   case walkingFootpath = 100
 }
 
-extension IconID {
+public extension IconID {
   /// The `ProductClass` associated with the `IconID`.
-  public var productClass: ProductClass {
+  var productClass: ProductClass {
     switch self {
     case .sydneyTrains, .intercityTrains, .regionalTrains, .temporaryTrains:
       return .train
