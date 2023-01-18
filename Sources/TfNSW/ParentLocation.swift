@@ -25,20 +25,20 @@ public struct ParentLocation: Decodable {
   
   public let niveau: Int?
   
-  enum CodingKeys: String, CodingKey {
+  enum CodingKeys: CodingKey {
     case isGlobalId, id, name, disassembledName, type, parent, properties, coord, niveau
   }
   
   public init(from decoder: Decoder) throws {
-    let values = try decoder.container(keyedBy: CodingKeys.self)
-    isGlobalId = try values.decodeIfPresent(Bool.self, forKey: .isGlobalId)
-    id = try values.decodeIfPresent(String.self, forKey: .id)
-    name = try values.decodeIfPresent(String.self, forKey: .name)
-    disassembledName = try values.decodeIfPresent(String.self, forKey: .disassembledName)
-    type = try values.decodeIfPresent(LocationType.self, forKey: .type)
-    parent = try values.decodeIfPresent(GrandparentLocation.self, forKey: .parent)
-    properties = try values.decodeIfPresent(ParentProperties.self, forKey: .properties)
-    coord = try values.decodeIfPresent([CLLocationDegrees].self, forKey: .coord)
-    niveau = try values.decodeIfPresent(Int.self, forKey: .niveau)
+    let container = try decoder.container(keyedBy: CodingKeys.self)
+    self.isGlobalId = try container.decodeIfPresent(Bool.self, forKey: .isGlobalId)
+    self.id = try container.decodeIfPresent(String.self, forKey: .id)
+    self._name.wrappedValue = try container.decodeIfPresent(String.self, forKey: .name)
+    self._disassembledName.wrappedValue = try container.decodeIfPresent(String.self, forKey: .disassembledName)
+    self.type = try container.decodeIfPresent(LocationType.self, forKey: .type)
+    self.parent = try container.decodeIfPresent(GrandparentLocation.self, forKey: .parent)
+    self.properties = try container.decodeIfPresent(ParentProperties.self, forKey: .properties)
+    self.coord = try container.decodeIfPresent([CLLocationDegrees].self, forKey: .coord)
+    self.niveau = try container.decodeIfPresent(Int.self, forKey: .niveau)
   }
 }

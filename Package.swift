@@ -18,6 +18,10 @@ let package = Package(
   ],
   dependencies: [
     .package(
+      url: "https://github.com/apple/swift-algorithms",
+      from: "1.0.0"
+    ),
+    .package(
       url: "https://github.com/malcommac/SwiftDate.git",
       from: "7.0.0"
     )
@@ -26,6 +30,10 @@ let package = Package(
     .target(
       name: "TfNSW",
       dependencies: [
+        .product(
+          name: "Algorithms",
+          package: "swift-algorithms"
+        ),
         "SwiftDate"
       ]
     )

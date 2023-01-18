@@ -2,56 +2,53 @@ import Foundation
 import UIKit
 
 public enum ProductClass: Int, Decodable {
-  /// Train.
+  /// Train
   case train = 1
   
-  /// Metro.
+  /// Metro
   case metro = 2
   
-  /// Light Rail.
+  /// Light Rail
   case lightRail = 4
   
-  /// Bus.
+  /// Bus
   case bus = 5
   
-  /// Coach.
+  /// Coach
   case coach = 7
   
-  /// Ferry.
+  /// Ferry
   case ferry = 9
-  
-  case onDemand = 10
-  
-  /// School Bus.
+    
+  /// School Bus
   case schoolBus = 11
   
-  /// Walking.
+  /// Walking
   case walking = 99
   
-  /// Walking (Footpath).
+  /// Walking Footpath
   case walkingFootpath = 100
   
-  /// Bicycle.
+  /// Bicycle
   case bicycle = 101
   
-  /// Take Bicycle On Public Transport.
+  /// Take Bicycle On Public Transport
   case takeBicycleOnPublicTransport = 102
   
-  /// Kiss & Ride.
+  /// Kiss & Ride
   case kissAndRide = 103
   
-  /// Park & Ride.
+  /// Park & Ride
   case parkAndRide = 104
   
-  /// Taxi.
+  /// Taxi
   case taxi = 105
   
-  /// Car.
+  /// Car
   case car = 106
 }
 
 extension ProductClass: CustomStringConvertible {
-  /// The custom description of the `ProductClass`.
   public var description: String {
     switch self {
     case .train:
@@ -71,7 +68,7 @@ extension ProductClass: CustomStringConvertible {
     case .walking:
       return "Walking"
     case .walkingFootpath:
-      return "Walking (Footpath)"
+      return "Walking Footpath"
     case .bicycle:
       return "Bicycle"
     case .takeBicycleOnPublicTransport:
@@ -84,28 +81,6 @@ extension ProductClass: CustomStringConvertible {
       return "Taxi"
     case .car:
       return "Car"
-    case .onDemand:
-      return "On-Demand"
-    }
-  }
-}
-
-public extension ProductClass {
-  /// The colour associated with the `ProductClass`.
-  var colour: UIColor {
-    switch self {
-    case .train:
-      return .train
-    case .metro:
-      return .metro
-    case .bus:
-      return .bus
-    case .lightRail:
-      return .lightRail
-    case .ferry:
-      return .ferry
-    default:
-      return .accent
     }
   }
 }

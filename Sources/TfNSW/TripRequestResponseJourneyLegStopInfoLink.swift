@@ -1,6 +1,6 @@
 import Foundation
 
-public struct TripRequestResponseJourneyLegStopInfoLink: Decodable {
+public struct TripRequestResponseJourneyLegStopInfoLink: Decodable, Equatable {
   /// This field contains a title that can be used when displaying the `url` URL. This value is equivalent to the `infoLinkText` value in `add_info`.
   public let urlText: String?
   

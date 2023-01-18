@@ -9,6 +9,7 @@ public enum LegPathTurnDirection: String, Decodable {
   case slightLeft = "SLIGHT_LEFT"
   case sharpLeft = "SHARP_LEFT"
   case sharpRight = "SHARP_RIGHT"
+  case uturn = "U_TURN"
 }
 
 extension LegPathTurnDirection: CustomStringConvertible {
@@ -30,6 +31,8 @@ extension LegPathTurnDirection: CustomStringConvertible {
       return "Sharp Left"
     case .sharpRight:
       return "Sharp Right"
+    case .uturn:
+      return "U-Turn"
     }
   }
 }

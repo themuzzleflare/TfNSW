@@ -9,6 +9,8 @@ public enum LegPathManoeuvre: String, Decodable {
   case origin = "ORIGIN"
   case enterBuiltUpArea = "ENTER_BUILTUPAREA"
   case leaveBuiltUpArea = "LEAVE_BUILTUPAREA"
+  case uturn = "U_TURN"
+  case destination = "DESTINATION"
 }
 
 extension LegPathManoeuvre: CustomStringConvertible {
@@ -30,6 +32,10 @@ extension LegPathManoeuvre: CustomStringConvertible {
       return "Enter Built Up Area"
     case .leaveBuiltUpArea:
       return "Leave Built Up Area"
+    case .uturn:
+      return "U-Turn"
+    case .destination:
+      return "Destination"
     }
   }
 }

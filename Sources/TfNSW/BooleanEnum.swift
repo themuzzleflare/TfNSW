@@ -1,21 +1,20 @@
 import Foundation
 
 public enum BooleanEnum: String, Decodable {
-  /// A value of "true".
+  /// "true"
   case trueValue = "true"
   
-  /// A value of "false".
+  /// "false"
   case falseValue = "false"
   
-  /// A value of "1".
+  /// "1"
   case oneValue = "1"
   
-  /// A value of "0".
+  /// "0"
   case zeroValue = "0"
 }
 
 public extension BooleanEnum {
-  /// The  `Bool` value of  `BooleanEnum`.
   var boolValue: Bool {
     switch self {
     case .trueValue, .oneValue:

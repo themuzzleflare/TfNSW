@@ -19,3 +19,9 @@ public struct TripRequestResponseJourneyLegStopInfo: Decodable {
   
   public let properties: LegStopInfoProperties?
 }
+
+extension TripRequestResponseJourneyLegStopInfo: Comparable {
+  public static func < (lhs: TripRequestResponseJourneyLegStopInfo, rhs: TripRequestResponseJourneyLegStopInfo) -> Bool {
+    return lhs.priority?.intValue ?? 6 < rhs.priority?.intValue ?? 6
+  }
+}

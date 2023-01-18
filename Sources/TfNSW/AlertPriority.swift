@@ -1,28 +1,27 @@
 import Foundation
 
 public enum AlertPriority: String, Decodable {
-  /// Very low.
+  /// Very low
   case veryLow
   
-  /// Low.
+  /// Low
   case low
   
-  /// Normal.
+  /// Normal
   case normal
   
-  /// High.
+  /// High
   case high
   
-  /// Very high.
+  /// Very high
   case veryHigh
 }
 
 extension AlertPriority: CustomStringConvertible {
-  /// The description of the alert priority.
   public var description: String {
     switch self {
     case .veryLow:
-      return "Very Low"
+      return "Very low"
     case .low:
       return "Low"
     case .normal:
@@ -30,7 +29,7 @@ extension AlertPriority: CustomStringConvertible {
     case .high:
       return "High"
     case .veryHigh:
-      return "Very High"
+      return "Very high"
     }
   }
 }

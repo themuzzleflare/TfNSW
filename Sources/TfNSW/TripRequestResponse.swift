@@ -5,5 +5,5 @@ public struct TripRequestResponse: Decodable {
   public let version: String?
   
   /// Contains zero or more journeys found based on the input parameters.
-  public let journeys: [TripRequestResponseJourney]?
+  public let journeys: [TripJourney]
 }

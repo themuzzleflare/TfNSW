@@ -1,7 +1,7 @@
 import Foundation
 
 public struct RouteProduct: Decodable {
-  public let id: Int?
+  public let id: DIVATransportID?
   
   /// This field indicates the type of the route, using the same values as elsewhere in this API.
   public let `class`: ProductClass?

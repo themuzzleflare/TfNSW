@@ -27,4 +27,6 @@ public struct TripTransportation: Decodable {
   
   /// Contains additional properties about this route.
   public let properties: RouteProperties?
+  
+  public let routeColour: String?
 }

@@ -1,28 +1,31 @@
 import Foundation
 
 public enum LocationType: String, Decodable {
-  /// Point of Interest.
+  /// Point of Interest
   case pointOfInterest = "poi"
   
-  /// Singlehouse.
+  /// Singlehouse
   case singlehouse
   
-  /// Stop.
+  /// Stop
   case stop
   
-  /// Platform.
+  /// Platform
   case platform
   
-  /// Street.
+  /// Street
   case street
   
-  /// Locality.
+  /// Locality
   case locality
   
-  /// Suburb.
+  /// Suburb
   case suburb
   
-  /// Unknown.
+  /// GIS Point
+  case gisPoint
+  
+  /// Unknown
   case unknown
 }
 
@@ -43,6 +46,8 @@ extension LocationType: CustomStringConvertible {
       return "Locality"
     case .suburb:
       return "Suburb"
+    case .gisPoint:
+      return "GIS Point"
     case .unknown:
       return "Unknown"
     }
