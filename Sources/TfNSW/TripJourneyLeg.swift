@@ -4,6 +4,8 @@ import UIKit
 import SwiftDate
 import Algorithms
 
+public typealias TripJourneyLeg = TripJourney.Leg
+
 public extension TripJourney {
   struct Leg: Decodable {
     /// The approximate amount of time in seconds required to complete this journey leg.
@@ -24,7 +26,7 @@ public extension TripJourney {
     public let destination: Stop?
     
     /// This element contains information about the mode of transport and/or route used to complete this journey leg.
-    public let transportation: TripTransportation?
+    public let transportation: Transportation?
     
     /// Contains a number of additional informational messages that may be useful for travellers.
     public let hints: [Hint]?
@@ -33,16 +35,16 @@ public extension TripJourney {
     public let stopSequence: [Stop]
     
     /// If the leg corresponds to a walking leg, this element contains walking directions.
-    public let footPathInfo: [TripRequestResponseJourneyLegStopFootpathInfo]?
+    public let footPathInfo: [FootpathInfo]?
     
     /// Contains a number of service alert messages relating to this journey leg. Information returned here is also available using the `add_info` API endpoint.
-    public let infos: [TripRequestResponseJourneyLegStopInfo]?
+    public let infos: [Info]?
     
     /// This elements contains a list of coordinates that this journey leg follows. A line between can be plotted between these coordinates in order when representing the journey on a map in order to show where the vehicle travels (or for a walking leg, the path to be walked).
     public let coords: [[CLLocationDegrees]]?
     
     /// Contains walking information for completing this journey leg.
-    public let pathDescriptions: [TripRequestResponseJourneyLegPathDescription]?
+    public let pathDescriptions: [PathDescription]?
     
     /// Contains information for how to interchange between the end of one leg to the next journey leg.
     public let interchange: Interchange?
@@ -67,7 +69,7 @@ public extension TripJourney.Leg {
   }
   
   var realtimeId: String? {
-    return transportation?.properties?.realtimeTripId ?? transportation?.properties?.avmsTripId
+    return transportation?.tripId
   }
   
   var fromName: String? {

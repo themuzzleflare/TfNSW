@@ -1,5 +1,7 @@
 import Foundation
 
+public typealias TripJourneyLegHint = TripJourney.Leg.Hint
+
 public extension TripJourney.Leg {
   struct Hint: Decodable {
     public let content: String?

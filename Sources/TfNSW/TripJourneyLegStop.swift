@@ -2,6 +2,8 @@ import Foundation
 import CoreLocation
 import SwiftDate
 
+public typealias TripJourneyLegStop = TripJourney.Leg.Stop
+
 public extension TripJourney.Leg {
   struct Stop: Decodable {
     public let isGlobalId: Bool?

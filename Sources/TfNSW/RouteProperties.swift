@@ -18,11 +18,18 @@ public struct RouteProperties: Decodable {
   
   public let frequencyLine: String?
   
+  public let directionId: Int?
+  
+  public let blockId: String?
+  
+  public let rtBlockId: String?
+  
   enum CodingKeys: String, CodingKey {
     case isTTB, tripCode, timetablePeriod, specialFares, lineDisplay
     case avmsTripId = "AVMSTripID"
     case realtimeTripId = "RealtimeTripId"
     case frequencyLine = "FrequencyLine"
+    case directionId, blockId, rtBlockId
   }
   
   public init(from decoder: Decoder) throws {
@@ -35,5 +42,8 @@ public struct RouteProperties: Decodable {
     self.avmsTripId = try container.decodeIfPresent(String.self, forKey: .avmsTripId)
     self.realtimeTripId = try container.decodeIfPresent(String.self, forKey: .realtimeTripId)
     self.frequencyLine = try container.decodeIfPresent(String.self, forKey: .frequencyLine)
+    self.directionId = try container.decodeIfPresent(Int.self, forKey: .directionId)
+    self.blockId = try container.decodeIfPresent(String.self, forKey: .blockId)
+    self.rtBlockId = try container.decodeIfPresent(String.self, forKey: .rtBlockId)
   }
 }

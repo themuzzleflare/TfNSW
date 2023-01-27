@@ -1,6 +1,8 @@
 import Foundation
 import CoreLocation
 
+public typealias TripJourneyLegInterchange = TripJourney.Leg.Interchange
+
 public extension TripJourney.Leg {
   struct Interchange: Decodable {
     /// This is a description of the interchange.

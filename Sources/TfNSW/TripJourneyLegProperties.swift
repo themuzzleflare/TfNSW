@@ -1,5 +1,7 @@
 import Foundation
 
+public typealias TripJourneyLegProperties = TripJourney.Leg.Properties
+
 public extension TripJourney.Leg {
   struct Properties: Decodable {
     public let vehicleAccess: [String]?
