@@ -35,7 +35,7 @@ public extension TripJourney.Leg {
   }
 }
 
-public extension LegTransportation {
+public extension TripJourney.Leg.Transportation {
   var tripId: String? {
     return properties?.realtimeTripId ?? properties?.avmsTripId
   }

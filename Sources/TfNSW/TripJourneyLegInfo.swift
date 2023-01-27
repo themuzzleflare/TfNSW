@@ -16,11 +16,28 @@ public extension TripJourney.Leg {
     /// This number indicates the version of this alert. Initially when it is created it has version `1`, but if it is then updated it will have a new `lastModification` value and the version will now be `2`.
     public let version: Int?
     
-    public let type: String?
+    public let type: `Type`?
     
     public let infoLinks: [TripRequestResponseJourneyLegStopInfoLink]?
     
-    public let properties: LegStopInfoProperties?
+    public let properties: Properties?
+    
+    public enum `Type`: String, Decodable, CustomStringConvertible {
+      case lineInfo
+      case stopInfo
+      case tripMessage
+      
+      public var description: String {
+        switch self {
+        case .lineInfo:
+          return "Line Info"
+        case .stopInfo:
+          return "Stop Info"
+        case .tripMessage:
+          return "Trip Message"
+        }
+      }
+    }
   }
 }
 
