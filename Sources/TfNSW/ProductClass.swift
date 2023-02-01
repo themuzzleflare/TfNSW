@@ -19,7 +19,7 @@ public enum ProductClass: Int, Decodable {
   
   /// Ferry
   case ferry = 9
-    
+  
   /// School Bus
   case schoolBus = 11
   

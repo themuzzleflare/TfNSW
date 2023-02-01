@@ -17,13 +17,7 @@ public struct CoordLocation: Decodable {
   public let properties: Properties?
   
   enum CodingKeys: CodingKey {
-    case id
-    case isGlobalId
-    case name
-    case disassembledName
-    case type
-    case coord
-    case properties
+    case id, isGlobalId, name, disassembledName, type, coord, properties
   }
   
   public init(from decoder: Decoder) throws {

@@ -1,5 +1,4 @@
 import Foundation
-import SwiftDate
 
 public struct AdditionalInfoResponseTimestamps: Decodable, Equatable {
   /// A timestamp in `YYYY-MM-DDTHH:MM:SSZ` format that indicates when the alert was created.
@@ -10,11 +9,13 @@ public struct AdditionalInfoResponseTimestamps: Decodable, Equatable {
 }
 
 public extension AdditionalInfoResponseTimestamps {
-  var creationDate: DateInRegion? {
-    return creation?.toDate(region: .current)
+  var creationDate: Date? {
+    guard let creation else { return nil }
+    return ISO8601DateFormatter.shared.date(from: creation)
   }
   
-  var lastModificationDate: DateInRegion? {
-    return lastModification?.toDate(region: .current)
+  var lastModificationDate: Date? {
+    guard let lastModification else { return nil }
+    return ISO8601DateFormatter.shared.date(from: lastModification)
   }
 }

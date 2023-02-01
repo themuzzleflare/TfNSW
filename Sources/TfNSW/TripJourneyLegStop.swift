@@ -1,6 +1,5 @@
 import Foundation
 import CoreLocation
-import SwiftDate
 
 public typealias TripJourneyLegStop = TripJourney.Leg.Stop
 
@@ -94,15 +93,15 @@ public extension TripJourney.Leg.Stop {
     return grandparent.name
   }
   
-  var stopNameStationRemoved: String? {
+  private var stopNameStationRemoved: String? {
     return stopName?.replacing(" Station", with: "")
   }
   
-  var stopNamePlatformRemoved: String? {
+  private var stopNamePlatformRemoved: String? {
     return stopName?.replacing(#/(,\s*|\s+)Platform\s*\d+(\s*(?=,))?/#, with: "")
   }
   
-  var stopNameStationPlatformRemoved: String? {
+  private var stopNameStationPlatformRemoved: String? {
     return stopNameStationRemoved?.replacing(#/(,\s*|\s+)Platform\s*\d+(\s*(?=,))?/#, with: "")
   }
   
@@ -134,112 +133,81 @@ public extension TripJourney.Leg.Stop {
     return arrivalTimeEstimated ?? arrivalTimePlanned
   }
   
-  var depTimeEstimatedDate: DateInRegion? {
-    return departureTimeEstimated?.toDate(region: .current)
+  var depTimeEstimatedDate: Date? {
+    guard let departureTimeEstimated else { return nil }
+    return ISO8601DateFormatter.shared.date(from: departureTimeEstimated)
   }
   
-  var arrTimeEstimatedDate: DateInRegion? {
-    return arrivalTimeEstimated?.toDate(region: .current)
+  var arrTimeEstimatedDate: Date? {
+    guard let arrivalTimeEstimated else { return nil }
+    return ISO8601DateFormatter.shared.date(from: arrivalTimeEstimated)
   }
   
-  var depTimePlannedDate: DateInRegion? {
-    return departureTimePlanned?.toDate(region: .current)
+  var depTimePlannedDate: Date? {
+    guard let departureTimePlanned else { return nil }
+    return ISO8601DateFormatter.shared.date(from: departureTimePlanned)
   }
   
-  var arrTimePlannedDate: DateInRegion? {
-    return arrivalTimePlanned?.toDate(region: .current)
+  var arrTimePlannedDate: Date? {
+    guard let arrivalTimePlanned else { return nil }
+    return ISO8601DateFormatter.shared.date(from: arrivalTimePlanned)
   }
   
-  var depTimeDate: DateInRegion? {
-    return depTime?.toDate(region: .current)
+  var depTimeDate: Date? {
+    guard let depTime else { return nil }
+    return ISO8601DateFormatter.shared.date(from: depTime)
   }
   
-  var arrTimeDate: DateInRegion? {
-    return arrTime?.toDate(region: .current)
+  var arrTimeDate: Date? {
+    guard let arrTime else { return nil }
+    return ISO8601DateFormatter.shared.date(from: arrTime)
   }
   
   var depTimeEstimatedText: String? {
-    return depTimeEstimatedDate?.toString(.time(.short))
+    return depTimeEstimatedDate?.formatted(date: .omitted, time: .shortened)
   }
   
   var depTimePlannedText: String? {
-    return depTimePlannedDate?.toString(.time(.short))
+    return depTimePlannedDate?.formatted(date: .omitted, time: .shortened)
   }
   
   var arrTimeEstimatedText: String? {
-    return arrTimeEstimatedDate?.toString(.time(.short))
+    return arrTimeEstimatedDate?.formatted(date: .omitted, time: .shortened)
   }
   
   var arrTimePlannedText: String? {
-    return arrTimePlannedDate?.toString(.time(.short))
+    return arrTimePlannedDate?.formatted(date: .omitted, time: .shortened)
   }
   
   var depTimeText: String? {
-    return depTimeDate?.toString(.time(.short))
+    return depTimeDate?.formatted(date: .omitted, time: .shortened)
   }
   
   var arrTimeText: String? {
-    return arrTimeDate?.toString(.time(.short))
+    return arrTimeDate?.formatted(date: .omitted, time: .shortened)
   }
   
   var relativeDepTime: String? {
-    return depTimeDate?.toRelative(since: .init())
+    guard let depTimeDate else { return nil }
+    return RelativeDateTimeFormatter.shared.localizedString(for: depTimeDate, relativeTo: .now)
   }
   
   var relativeArrTime: String? {
-    return arrTimeDate?.toRelative(since: .init())
+    guard let arrTimeDate else { return nil }
+    return RelativeDateTimeFormatter.shared.localizedString(for: arrTimeDate, relativeTo: .now)
   }
   
   var depTimeInPast: Bool? {
-    return depTimeDate?.isInPast
-  }
-  
-  var arrTimeDelay: Int? {
-    guard let arrTimePlannedDate,
-          let interval = arrTimeEstimatedDate?.timeIntervalSince(arrTimePlannedDate) else { return nil }
-    return Int(interval)
-  }
-  
-  var depTimeDelay: Int? {
-    guard let depTimePlannedDate,
-          let interval = depTimeEstimatedDate?.timeIntervalSince(depTimePlannedDate) else { return nil }
-    return Int(interval)
-  }
-  
-  var arrTimeDelayText: String? {
-    guard let arrTimeDelay, arrTimeDelay >= 1 || arrTimeDelay <= -1 else { return nil }
-    var arrTimeDelayCopy = arrTimeDelay
-    
-    if arrTimeDelay.signum() == -1 {
-      arrTimeDelayCopy.negate()
-    }
-    
-    let text = arrTimeDelayCopy.seconds.timeInterval.toIntervalString {
-      $0.unitsStyle = .abbreviated
-      $0.allowedUnits = [.second, .minute, .hour]
-    }
-    
-    return "\(text) \(arrTimeDelay.signum() == -1 ? "early" : "late")"
-  }
-  
-  var depTimeDelayText: String? {
-    guard let depTimeDelay, depTimeDelay >= 1 || depTimeDelay <= -1 else { return nil }
-    var depTimeDelayCopy = depTimeDelay
-    
-    if depTimeDelay.signum() == -1 {
-      depTimeDelayCopy.negate()
-    }
-    
-    let text = depTimeDelayCopy.seconds.timeInterval.toIntervalString {
-      $0.unitsStyle = .abbreviated
-      $0.allowedUnits = [.second, .minute, .hour]
-    }
-    
-    return "\(text) \(depTimeDelay.signum() == -1 ? "early" : "late")"
+    guard let depTimeDate else { return nil }
+    return depTimeDate < .now
   }
   
   var location: CLLocation? {
     guard let latitude = coord?.first, let longitude = coord?.last else { return nil }
     return CLLocation(latitude: latitude, longitude: longitude)
+  }
+  
+  var wheelchairAccessible: Bool {
+    return properties?.wheelchairAccess == .trueValue || properties?.wheelchairAccess == .oneValue
   }
 }

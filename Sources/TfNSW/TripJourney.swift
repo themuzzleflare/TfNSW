@@ -1,5 +1,4 @@
 import Foundation
-import UIKit
 
 public struct TripJourney: Decodable {
   public let rating: Int?

@@ -133,7 +133,7 @@ public extension DIVATransportID {
     switch self {
     case .sydneyTrains:
       return .sydneyTrains
-    case .intercityTrains:
+    case .intercityTrains, .sydneyMetro:
       return .intercityTrains
     case .regionalTrains:
       return .regionalTrains
@@ -175,8 +175,6 @@ public extension DIVATransportID {
       return .newcastleLightRail
     case .temporaryCoaches:
       return .temporaryCoaches
-    case .sydneyMetro:
-      return .intercityTrains
     }
   }
 }

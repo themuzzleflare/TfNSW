@@ -18,21 +18,30 @@ public extension TripJourney.Leg {
     
     public let type: `Type`?
     
-    public let infoLinks: [TripRequestResponseJourneyLegStopInfoLink]?
+    public let infoLinks: [InfoLink]?
     
     public let properties: Properties?
     
     public enum `Type`: String, Decodable, CustomStringConvertible {
-      case lineInfo
+      case routeInfo
       case stopInfo
+      case stopBlocking
+      case lineInfo
+      case bannerInfo
       case tripMessage
       
       public var description: String {
         switch self {
-        case .lineInfo:
-          return "Line Info"
+        case .routeInfo:
+          return "Route Info"
         case .stopInfo:
           return "Stop Info"
+        case .stopBlocking:
+          return "Stop Blocking"
+        case .lineInfo:
+          return "Line Info"
+        case .bannerInfo:
+          return "Banner Info"
         case .tripMessage:
           return "Trip Message"
         }

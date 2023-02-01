@@ -1,7 +1,5 @@
 import Foundation
 import CoreLocation
-import UIKit
-import SwiftDate
 import Algorithms
 
 public typealias TripJourneyLeg = TripJourney.Leg
@@ -57,10 +55,8 @@ public extension TripJourney {
 public extension TripJourney.Leg {
   var durationText: String {
     let duration = duration ?? 0
-    return duration.seconds.timeInterval.toIntervalString {
-      $0.unitsStyle = .abbreviated
-      $0.allowedUnits = [.hour, .minute]
-    }
+    let seconds = DateComponents(second: duration)
+    return DateComponentsFormatter.shared.string(from: seconds) ?? ""
   }
   
   /// Whether or not both the vehicle and the stop are wheelchair-accessible.
@@ -109,16 +105,15 @@ public extension TripJourney.Leg {
   
   /// The relative wait time between the arrival of the previous leg and the departure of the current leg.
   func relativeWaitTime(for leg: TripJourney.Leg) -> Int? {
-    guard let previousLegArrivalTime = leg.destination?.arrTimeDate else { return nil }
-    return origin?.depTimeDate?.difference(in: .second, from: previousLegArrivalTime)
+    guard let previousLegArrivalTime = leg.destination?.arrTimeDate,
+          let originDepTimeDate = origin?.depTimeDate else { return nil }
+    return .init(previousLegArrivalTime.distance(to: originDepTimeDate))
   }
   
   func relativeWaitTimeText(for leg: TripJourney.Leg) -> String? {
     guard let relativeWaitTime = relativeWaitTime(for: leg) else { return nil }
-    let string = relativeWaitTime.seconds.timeInterval.toIntervalString {
-      $0.unitsStyle = .abbreviated
-      $0.allowedUnits = [.hour, .minute]
-    }
+    let seconds = DateComponents(second: relativeWaitTime)
+    guard let string = DateComponentsFormatter.shared.string(from: seconds) else { return nil }
     return "\(string) wait"
   }
   
@@ -151,10 +146,8 @@ public extension Array where Element == TripJourney.Leg {
   }
   
   var totalDurationText: String {
-    return self.totalDuration.seconds.timeInterval.toIntervalString {
-      $0.unitsStyle = .abbreviated
-      $0.allowedUnits = [.hour, .minute]
-    }
+    let seconds = DateComponents(second: totalDuration)
+    return DateComponentsFormatter.shared.string(from: seconds) ?? ""
   }
   
   var fromName: String? {
