@@ -1,5 +1,7 @@
 import Foundation
 import CoreLocation
+import Algorithms
+import UIKit
 
 public typealias TripJourneyLegStop = TripJourney.Leg.Stop
 
@@ -135,66 +137,96 @@ public extension TripJourney.Leg.Stop {
   
   var depTimeEstimatedDate: Date? {
     guard let departureTimeEstimated else { return nil }
-    return ISO8601DateFormatter.shared.date(from: departureTimeEstimated)
+    return try? .init(departureTimeEstimated, strategy: .iso8601)
   }
   
   var arrTimeEstimatedDate: Date? {
     guard let arrivalTimeEstimated else { return nil }
-    return ISO8601DateFormatter.shared.date(from: arrivalTimeEstimated)
+    return try? .init(arrivalTimeEstimated, strategy: .iso8601)
   }
   
   var depTimePlannedDate: Date? {
     guard let departureTimePlanned else { return nil }
-    return ISO8601DateFormatter.shared.date(from: departureTimePlanned)
+    return try? .init(departureTimePlanned, strategy: .iso8601)
   }
   
   var arrTimePlannedDate: Date? {
     guard let arrivalTimePlanned else { return nil }
-    return ISO8601DateFormatter.shared.date(from: arrivalTimePlanned)
+    return try? .init(arrivalTimePlanned, strategy: .iso8601)
   }
   
   var depTimeDate: Date? {
     guard let depTime else { return nil }
-    return ISO8601DateFormatter.shared.date(from: depTime)
+    return try? .init(depTime, strategy: .iso8601)
   }
   
   var arrTimeDate: Date? {
     guard let arrTime else { return nil }
-    return ISO8601DateFormatter.shared.date(from: arrTime)
+    return try? .init(arrTime, strategy: .iso8601)
   }
   
   var depTimeEstimatedText: String? {
-    return depTimeEstimatedDate?.formatted(date: .omitted, time: .shortened)
+    return depTimeEstimatedDate?.formatted(.shortenedTime)
   }
   
   var depTimePlannedText: String? {
-    return depTimePlannedDate?.formatted(date: .omitted, time: .shortened)
+    return depTimePlannedDate?.formatted(.shortenedTime)
   }
   
   var arrTimeEstimatedText: String? {
-    return arrTimeEstimatedDate?.formatted(date: .omitted, time: .shortened)
+    return arrTimeEstimatedDate?.formatted(.shortenedTime)
   }
   
   var arrTimePlannedText: String? {
-    return arrTimePlannedDate?.formatted(date: .omitted, time: .shortened)
+    return arrTimePlannedDate?.formatted(.shortenedTime)
   }
   
   var depTimeText: String? {
-    return depTimeDate?.formatted(date: .omitted, time: .shortened)
+    return depTimeDate?.formatted(.shortenedTime)
   }
   
   var arrTimeText: String? {
-    return arrTimeDate?.formatted(date: .omitted, time: .shortened)
+    return arrTimeDate?.formatted(.shortenedTime)
   }
   
   var relativeDepTime: String? {
-    guard let depTimeDate else { return nil }
-    return RelativeDateTimeFormatter.shared.localizedString(for: depTimeDate, relativeTo: .now)
+    return depTimeDate?.formatted(.relativeLabel)
+  }
+  
+  var relativeDepTimeAttr: AttributedString? {
+    guard var relativeDepTime else { return nil }
+    relativeDepTime.replace("in ", with: "")
+    
+    var attr = AttributedString(relativeDepTime)
+    attr.font = .preferredFont(forTextStyle: .caption1)
+    attr.foregroundColor = .white
+    attr.paragraphStyle = .centreAligned
+    
+    if let digitRange = attr.range(of: #"\d+"#, options: .regularExpression) {
+      attr[digitRange].font = .preferredFont(forTextStyle: .body)
+    }
+    
+    return attr
   }
   
   var relativeArrTime: String? {
-    guard let arrTimeDate else { return nil }
-    return RelativeDateTimeFormatter.shared.localizedString(for: arrTimeDate, relativeTo: .now)
+    return arrTimeDate?.formatted(.relativeLabel)
+  }
+  
+  var relativeArrTimeAttr: AttributedString? {
+    guard var relativeArrTime else { return nil }
+    relativeArrTime.replace("in ", with: "")
+    
+    var attr = AttributedString(relativeArrTime)
+    attr.font = .preferredFont(forTextStyle: .caption1)
+    attr.foregroundColor = .white
+    attr.paragraphStyle = .centreAligned
+    
+    if let digitRange = attr.range(of: #"\d+"#, options: .regularExpression) {
+      attr[digitRange].font = .preferredFont(forTextStyle: .body)
+    }
+    
+    return attr
   }
   
   var depTimeInPast: Bool? {
@@ -204,7 +236,12 @@ public extension TripJourney.Leg.Stop {
   
   var location: CLLocation? {
     guard let latitude = coord?.first, let longitude = coord?.last else { return nil }
-    return CLLocation(latitude: latitude, longitude: longitude)
+    return .init(latitude: latitude, longitude: longitude)
+  }
+  
+  var coordinate: CLLocationCoordinate2D? {
+    guard let latitude = coord?.first, let longitude = coord?.last else { return nil }
+    return .init(latitude: latitude, longitude: longitude)
   }
   
   var wheelchairAccessible: Bool {

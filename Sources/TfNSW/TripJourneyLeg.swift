@@ -7,10 +7,10 @@ public typealias TripJourneyLeg = TripJourney.Leg
 public extension TripJourney {
   struct Leg: Decodable {
     /// The approximate amount of time in seconds required to complete this journey leg.
-    public let duration: Int?
+    public let duration: Duration?
     
     /// The approximate distance in metres travelled to complete this journey leg.
-    public let distance: Int?
+    public let distance: CLLocationDistance?
     
     /// This indicates whether or not real-time data has been used to calculate the departure/arrival timestamps.
     public let isRealtimeControlled: Bool?
@@ -49,14 +49,41 @@ public extension TripJourney {
     
     /// Contains additional information about this journey leg, such as wheelchair accessibility information.
     public let properties: Properties?
+    
+    enum CodingKeys: CodingKey {
+      case duration, distance, isRealtimeControlled, realtimeStatus, origin, destination, transportation, hints, stopSequence, footPathInfo, infos, coords, pathDescriptions, interchange, properties
+    }
+    
+    public init(from decoder: Decoder) throws {
+      let container = try decoder.container(keyedBy: CodingKeys.self)
+      
+      self.duration = try {
+        guard let int = try container.decodeIfPresent(Int.self, forKey: .duration) else { return nil }
+        return Duration.seconds(int)
+      }()
+      
+      self.distance = try container.decodeIfPresent(CLLocationDistance.self, forKey: .distance)
+      self.isRealtimeControlled = try container.decodeIfPresent(Bool.self, forKey: .isRealtimeControlled)
+      self.realtimeStatus = try container.decodeIfPresent([String].self, forKey: .realtimeStatus)
+      self.origin = try container.decodeIfPresent(Stop.self, forKey: .origin)
+      self.destination = try container.decodeIfPresent(Stop.self, forKey: .destination)
+      self.transportation = try container.decodeIfPresent(Transportation.self, forKey: .transportation)
+      self.hints = try container.decodeIfPresent([Hint].self, forKey: .hints)
+      self.stopSequence = try container.decode([Stop].self, forKey: .stopSequence)
+      self.footPathInfo = try container.decodeIfPresent([FootpathInfo].self, forKey: .footPathInfo)
+      self.infos = try container.decodeIfPresent([Info].self, forKey: .infos)
+      self.coords = try container.decodeIfPresent([[CLLocationDegrees]].self, forKey: .coords)
+      self.pathDescriptions = try container.decodeIfPresent([PathDescription].self, forKey: .pathDescriptions)
+      self.interchange = try container.decodeIfPresent(Interchange.self, forKey: .interchange)
+      self.properties = try container.decodeIfPresent(Properties.self, forKey: .properties)
+    }
   }
 }
 
 public extension TripJourney.Leg {
   var durationText: String {
-    let duration = duration ?? 0
-    let seconds = DateComponents(second: duration)
-    return DateComponentsFormatter.shared.string(from: seconds) ?? ""
+    let duration = duration ?? .seconds(0)
+    return duration.formatted(.legDuration)
   }
   
   /// Whether or not both the vehicle and the stop are wheelchair-accessible.
@@ -69,24 +96,24 @@ public extension TripJourney.Leg {
   }
   
   var fromName: String? {
-    return origin?.shortNamePlatform(productClass: transportation?.product?.class)
+    return origin?.shortNamePlatform(productClass: productClass)
   }
   
   var fromNameShort: String? {
-    return origin?.shortName(productClass: transportation?.product?.class)
+    return origin?.shortName(productClass: productClass)
   }
   
   var toName: String? {
-    return destination?.shortNamePlatform(productClass: transportation?.product?.class)
+    return destination?.shortNamePlatform(productClass: productClass)
   }
   
   var toNameShort: String? {
-    return destination?.shortName(productClass: transportation?.product?.class)
+    return destination?.shortName(productClass: productClass)
   }
   
   var legName: String? {
-    guard let from = origin?.shortName(productClass: transportation?.product?.class),
-          let to = destination?.shortName(productClass: transportation?.product?.class) else { return nil }
+    guard let from = origin?.shortName(productClass: productClass),
+          let to = destination?.shortName(productClass: productClass) else { return nil }
     return "\(from) to \(to)"
   }
   
@@ -103,18 +130,37 @@ public extension TripJourney.Leg {
     return origin?.relativeDepTime
   }
   
+  var relativeDepTimeAttr: AttributedString? {
+    return origin?.relativeDepTimeAttr
+  }
+  
   /// The relative wait time between the arrival of the previous leg and the departure of the current leg.
-  func relativeWaitTime(for leg: TripJourney.Leg) -> Int? {
+  func relativeWaitTime(for leg: TripJourney.Leg) -> Duration? {
     guard let previousLegArrivalTime = leg.destination?.arrTimeDate,
           let originDepTimeDate = origin?.depTimeDate else { return nil }
-    return .init(previousLegArrivalTime.distance(to: originDepTimeDate))
+    return .seconds(previousLegArrivalTime.distance(to: originDepTimeDate))
   }
   
   func relativeWaitTimeText(for leg: TripJourney.Leg) -> String? {
     guard let relativeWaitTime = relativeWaitTime(for: leg) else { return nil }
-    let seconds = DateComponents(second: relativeWaitTime)
-    guard let string = DateComponentsFormatter.shared.string(from: seconds) else { return nil }
+    let string = relativeWaitTime.formatted(.relativeWaitTime)
     return "\(string) wait"
+  }
+  
+  func relativeWaitTimeTextAttr(for leg: TripJourney.Leg) -> AttributedString? {
+    guard let relativeWaitTimeText = relativeWaitTimeText(for: leg) else { return nil }
+    
+    var attr = AttributedString(relativeWaitTimeText)
+    
+    attr.font = .preferredFont(forTextStyle: .caption1)
+    attr.foregroundColor = .white
+    attr.paragraphStyle = .centreAligned
+    
+    if let digitRange = attr.range(of: #"\d+"#, options: .regularExpression) {
+      attr[digitRange].font = .preferredFont(forTextStyle: .body)
+    }
+    
+    return attr
   }
   
   /// Whether or not the departure date and time of the leg's origin is in the past.
@@ -141,13 +187,12 @@ public extension TripJourney.Leg {
 
 public extension Array where Element == TripJourney.Leg {
   /// The approximate amount of time in seconds required to complete this journey.
-  var totalDuration: Int {
-    return self.compactMap({$0.duration}).reduce(0, +)
+  var totalDuration: Duration {
+    return self.compactMap({$0.duration}).reduce(.seconds(0), +)
   }
   
   var totalDurationText: String {
-    let seconds = DateComponents(second: totalDuration)
-    return DateComponentsFormatter.shared.string(from: seconds) ?? ""
+    return totalDuration.formatted(.legDuration)
   }
   
   var fromName: String? {
@@ -174,6 +219,10 @@ public extension Array where Element == TripJourney.Leg {
   
   var relativeDepTime: String? {
     return self.first?.relativeDepTime
+  }
+  
+  var relativeDepTimeAttr: AttributedString? {
+    return self.first?.relativeDepTimeAttr
   }
   
   /// Whether or not the departure date and time of the first leg's origin is in the past.

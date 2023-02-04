@@ -16,7 +16,7 @@ public struct TripJourney: Decodable {
 
 public extension TripJourney {
   /// The approximate amount of time in seconds required to complete this journey.
-  var totalDuration: Int {
+  var totalDuration: Duration {
     return legs.totalDuration
   }
   
@@ -42,6 +42,10 @@ public extension TripJourney {
   
   var relativeDepTime: String? {
     return legs.relativeDepTime
+  }
+  
+  var relativeDepTimeAttr: AttributedString? {
+    return legs.relativeDepTimeAttr
   }
   
   /// Whether or not the departure date and time of the first leg's origin is in the past.

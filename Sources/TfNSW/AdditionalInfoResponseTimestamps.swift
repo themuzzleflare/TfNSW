@@ -11,11 +11,11 @@ public struct AdditionalInfoResponseTimestamps: Decodable, Equatable {
 public extension AdditionalInfoResponseTimestamps {
   var creationDate: Date? {
     guard let creation else { return nil }
-    return ISO8601DateFormatter.shared.date(from: creation)
+    return try? .init(creation, strategy: .iso8601)
   }
   
   var lastModificationDate: Date? {
     guard let lastModification else { return nil }
-    return ISO8601DateFormatter.shared.date(from: lastModification)
+    return try? .init(lastModification, strategy: .iso8601)
   }
 }
